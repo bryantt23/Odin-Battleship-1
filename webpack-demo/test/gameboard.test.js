@@ -12,9 +12,10 @@ test("grid is working", () => {
 test("place ship of length one", () => {
   const board = new Gameboard();
   const ship1 = new Ship(1);
+  //console.log(ship1)
   board.placeShip(ship1, 0, 0)
-
-  console.log(board.grid [0][0]);
+  console.log(board);
+  console.log('hi', board.grid [0][0]);
   expect(board.grid [0][1]).toBeNull();
   expect(board.grid [0][0]).toBeInstanceOf(Ship);
 });
