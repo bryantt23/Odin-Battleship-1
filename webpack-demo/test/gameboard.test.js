@@ -1,6 +1,3 @@
-//recieveAttack function, missedAttacks. Gameboard is 2d array
-// look up how to rotate ship
-//check board for ship placement, if fits return true and place ship, if not return false
 import  Ship  from "../src/ship";
 import Gameboard from "../src/gameboard";
 
@@ -12,10 +9,65 @@ test("grid is working", () => {
 test("place ship of length one", () => {
   const board = new Gameboard();
   const ship1 = new Ship(1);
-  //console.log(ship1)
+
   board.placeShip(ship1, 0, 0)
   console.log(board);
-  console.log('hi', board.grid [0][0]);
+  console.log(board.grid [0][0]);
   expect(board.grid [0][1]).toBeNull();
   expect(board.grid [0][0]).toBeInstanceOf(Ship);
 });
+
+test('place ship of length two horizontally', () => {
+    const board = new Gameboard();
+    const ship2 = new Ship(2);
+
+    const result = board.placeShip(ship2, 0, 0, false);
+
+    expect(result).toBe(true);
+    expect(board.grid[0][0]).toBeInstanceOf(Ship);
+    expect(board.grid[0][1]).toBeInstanceOf(Ship);
+    expect(board.grid [0][3]).toBeNull();
+  });
+
+  test('place ship of length three vertically', () => {
+    const board = new Gameboard();
+    const ship3 = new Ship(3);
+
+    const result = board.placeShip(ship3, 0, 0, true);
+
+    expect(result).toBe(true);
+    expect(board.grid[0][0]).toBeInstanceOf(Ship);
+    expect(board.grid[1][0]).toBeInstanceOf(Ship);
+    expect(board.grid[2][0]).toBeInstanceOf(Ship);
+    expect(board.grid [3][0]).toBeNull();
+  });
+
+  test('place ship horizontally with overlap', () => {
+    const board = new Gameboard();
+    const ship2 = new Ship(2);
+    const ship3 = new Ship(3);
+
+    board.placeShip(ship2, 0, 0);
+    expect(board.placeShip(ship3, 0, 0)).toBe(false);
+    expect(board.grid[0][0]).toBeInstanceOf(Ship);
+    expect(board.grid[0][1]).toBeInstanceOf(Ship);
+    expect(board.grid [0][3]).toBeNull();
+
+    //console.log(board)
+  });
+
+  test('place ship vertically of length 3', () => {
+    const board = new Gameboard();
+    const ship3 = new Ship(3);
+
+    board.placeShip(ship3, 3, 3,true);
+    expect(board.grid[0][0]).toBeNull();
+    expect(board.grid[3][3]).toBeInstanceOf(Ship);
+    expect(board.grid[4][3]).toBeInstanceOf(Ship);
+    expect(board.grid[5][3]).toBeInstanceOf(Ship);
+    expect(board.grid[2][0]).toBeNull();
+
+    console.log(board)
+  });
+
+  
