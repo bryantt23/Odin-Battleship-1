@@ -67,7 +67,34 @@ test('place ship of length two horizontally', () => {
     expect(board.grid[5][3]).toBeInstanceOf(Ship);
     expect(board.grid[2][0]).toBeNull();
 
-    console.log(board)
+    //console.log(board)
   });
 
-  
+  test("Can't place ship vertically with length of 3 and overlap", () => {
+    const board = new Gameboard();
+    const ship2 = new Ship(2);
+    const ship3 = new Ship(3);
+
+    expect(board.placeShip(ship3, 9, 9, true)).toBe(false);
+    expect(board.placeShip(ship2, 9, 9)).toBe(false);
+    
+    //console.log(board)
+   });
+
+   test("Multiple ships and multiple directions", () => {
+    const board = new Gameboard();
+    const ship2 = new Ship(2);
+    const ship3 = new Ship(3);
+    const ship4 = new Ship(4);
+
+    expect(board.placeShip(ship3, 7, 9, true)).toBe(true);
+    expect(board.placeShip(ship2, 0, 7)).toBe(true);
+    expect(board.placeShip(ship4, 2, 5)).toBe(true);
+    expect(board.grid[0][0]).toBeNull();
+    expect(board.grid[3][3]).toBeNull();
+    expect(board.grid[2][8]).toBeInstanceOf(Ship);
+    expect(board.grid[0][8]).toBeInstanceOf(Ship);
+    expect(board.grid[2][0]).toBeNull();
+    
+    console.log(board)
+   });
