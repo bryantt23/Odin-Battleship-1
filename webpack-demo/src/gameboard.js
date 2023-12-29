@@ -78,7 +78,39 @@ class Gameboard {
 
     return false; // Ship cannot be rotated
   };
-  receiveAttack = () => {};
+
+  receiveAttack = (row, column, hit, miss) => {
+    //check for valid coordinates
+    if (row < 0 || row >= this.gridSize || column < 0 || column >= this.grisSize) {
+      return false; //invalid attack coordinates
+    }
+    const target = this.grid[row][column];
+
+  // Check if the target has already been attacked
+  if (target === 'X' || target === 'O') {
+    return false; // Already attacked this spot
+  }
+  // Mark the target as attacked
+  if (target === null) {
+    this.grid[row][column] = miss; //'O'
+  } else {
+    this.grid[row][column] = hit;//'X'
+    // Check if the ship is sunk
+    if (this.isShipSunk(target)) {
+      console.log("Ship is sunk")
+      //Show something that indicates the ship is sunk
+    }
+  }
+    // Check if all ships are sunk
+    if (this.areAllShipsSunk()) {
+      console.log("Game Over")
+      //Show something that indicates the game is over
+    }
+  
+    return true; // Valid attack
+  };
 }
 
 export default Gameboard;
+
+//make hit/miss spot unclickable
