@@ -81,36 +81,58 @@ class Gameboard {
 
   receiveAttack = (row, column, hit, miss) => {
     //check for valid coordinates
-    if (row < 0 || row >= this.gridSize || column < 0 || column >= this.grisSize) {
+    if (
+      row < 0 ||
+      row >= this.gridSize ||
+      column < 0 ||
+      column >= this.grisSize
+    ) {
       return false; //invalid attack coordinates
     }
     const target = this.grid[row][column];
 
-  // Check if the target has already been attacked
-  if (target === 'X' || target === 'O') {
-    return false; // Already attacked this spot
-  }
-  // Mark the target as attacked
-  if (target === null) {
-    this.grid[row][column] = miss; //'O'
-  } else {
-    this.grid[row][column] = hit;//'X'
-    // Check if the ship is sunk
-    if (this.isShipSunk(target)) {
-      console.log("Ship is sunk")
-      //Show something that indicates the ship is sunk
+    // Check if the target has already been attacked
+    if (target === "X" || target === "O") {
+      return false; // Already attacked this spot
     }
-  }
-    // Check if all ships are sunk
-    if (this.areAllShipsSunk()) {
-      console.log("Game Over")
-      //Show something that indicates the game is over
+    // Mark the target as attacked
+    if (target === null) {
+      this.grid[row][column] = miss; //'O'
+    } else {
+      this.grid[row][column] = hit; //'X'
+
+      isShipSunk = (row, column) => {
+        const target = this.grid[row][column];
+
+        // Check if the target is a ship and if it's already sunk
+        if (target !== null && target !== "X") {
+          // Check if all cells occupied by the ship have been hit
+          for (let row = 0; row < this.gridSize; row++) {
+            for (let column = 0; column < this.gridSize; column++) {
+              if (this.grid[row][column] === target) {
+                return false; // Ship is not sunk yet
+              }
+            }
+          }
+          return true; // Ship is sunk
+        }
+
+        return false; // Not a ship or already sunk
+      };
+
+      areAllShipsSunk = () => {
+        // Check if all ships on the gameboard are sunk
+        for (let row = 0; row < this.gridSize; row++) {
+          for (let column = 0; column < this.gridSize; column++) {
+            if (!this.isShipSunk(row, column)) {
+              return false; // At least one ship is not sunk yet
+            }
+          }
+        }
+        return true; // All ships are sunk
+      };
     }
-  
-    return true; // Valid attack
   };
 }
 
 export default Gameboard;
-
-//make hit/miss spot unclickable
