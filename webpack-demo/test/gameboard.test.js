@@ -96,5 +96,27 @@ test('place ship of length two horizontally', () => {
     expect(board.grid[0][8]).toBeInstanceOf(Ship);
     expect(board.grid[2][0]).toBeNull();
     
+    //console.log(board)
+   });
+
+   test("Should return false for invalid attack coordinates", () => {
+    const board = new Gameboard();
+    
+    expect(board.receiveAttack(-1, 5)).toBe(false);
+    expect(board.receiveAttack(11, 5)).toBe(false);
+    expect(board.receiveAttack(2, 5)).toBe(true);
+    expect(board.receiveAttack(0, 5)).toBe(true);
+
+    //console.log(board)
+   }); 
+
+   test("Should return false for attacking the same spot twice", () => {
+    const board = new Gameboard();
+    
+    board.receiveAttack(2, 3, 'X', 'O')
+    expect(board.receiveAttack(2, 3, 'X', 'O')).toBe(false);
+    board.receiveAttack(2, 5, 'X', 'X')
+    expect(board.receiveAttack(2, 5,'X', 'X')).toBe(false);
+
     console.log(board)
    });
