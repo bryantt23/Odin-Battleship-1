@@ -123,8 +123,8 @@ class Gameboard {
     // Check if the target is a ship and if it's already sunk
     if (target !== null && target !== "X") {
       // Check if all cells occupied by the ship have been hit
-      for (let row = 0; row < this.gridSize; row++) {
-        for (let column = 0; column < this.gridSize; column++) {
+      for (let r = 0; r < this.gridSize; r++) {
+        for (let c = 0; c < this.gridSize; c++) {
           if (this.grid[r][c] === target) {
             return false; // Ship is not sunk yet
           }
@@ -138,9 +138,9 @@ class Gameboard {
 
   areAllShipsSunk = () => {
     // Check if all ships on the gameboard are sunk
-    for (let row = 0; row < this.gridSize; row++) {
-      for (let column = 0; column < this.gridSize; column++) {
-        if (!this.isShipSunk(row, column)) {
+    for (let r = 0; r < this.gridSize; r++) {
+      for (let c = 0; c < this.gridSize; c++) {
+        if (!this.isShipSunk(r, c)) {
           return false; // At least one ship is not sunk yet
         }
       }
