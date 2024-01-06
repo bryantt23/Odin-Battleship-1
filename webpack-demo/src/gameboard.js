@@ -88,7 +88,6 @@ class Gameboard {
     ) {
       return false; // Invalid attack coordinates
     }
-
     const target = this.grid[row][column];
 
     // Check if the target has already been attacked
@@ -120,11 +119,11 @@ class Gameboard {
   isShipSunk = (row, column) => {
     const target = this.grid[row][column];
 
-    // Check if the target is a ship and if it's already sunk
-    if (target !== null && target !== "X") {
+    //Check if the target is a ship and if it's already sunk
+    if (target !== null && target !== "X") { 
       // Check if all cells occupied by the ship have been hit
       for (let r = 0; r < this.gridSize; r++) {
-        for (let c = 0; c < this.gridSize; c++) {
+        for (let c = 0; c < this.gridSize; c++) { 
           if (this.grid[r][c] === target) {
             return false; // Ship is not sunk yet
           }
