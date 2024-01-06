@@ -3,7 +3,6 @@ class Player {
     this.name = name;
     this.gameboard = gameboard;
   }
-  // Te player's attack method
   attack(row, column) {
     //Check if the move is legal(not attacked yet)
     if (this.gameboard.receiveAttack(row, column, "X", "O")) {
