@@ -1,13 +1,14 @@
 import Gameboard from "./gameboard";
-
+import Player from "./player";
+import ComputerPlayer from "./computer";
 
 class Game {
   constructor() {
     this.player1Gameboard = new Gameboard();
     this.player2Gameboard = new Gameboard();
     this.player1 = new Player("Player 1", this.player2Gameboard);
-    console.log("hello world")
-    console.log(this.player1)
+    //console.log("hello world")
+    //console.log(this.player1)
     this.player2 = new ComputerPlayer(this.player1Gameboard);
 
     this.currentPlayer = this.player1;
