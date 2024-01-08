@@ -144,18 +144,3 @@ test("should mark a spot as hit when attacking a ship", () => {
 
   //console.log(board)
 });
-
- /*test("should handle ship sinking correctly", () => {
-  const ship = new Ship(3);
-  const board = new Gameboard();
-  board.placeShip(ship, 6, 2, false);
-
-  expect(board.receiveAttack(6, 2, "X", "O")).toBe(true);
-  expect(board.receiveAttack(6, 3, "X", "O")).toBe(true);
-  expect(board.isShipSunk(ship)).toBe(false); // Ship not sunk yet
-
-  expect(board.receiveAttack(6, 4, "X", "O")).toBe(true);
-  expect(board.isShipSunk(ship)).toBe(true); // Ship sunk
-
-  console.log(board)
-});*/

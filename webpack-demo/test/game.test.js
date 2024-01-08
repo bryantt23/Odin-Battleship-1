@@ -33,13 +33,13 @@ test("checking constructor", () => {
 
   ---version 2 use 2 ships with lengths of 2 and 3, one vertical, one horizontal, one touching the edge and one in the middle
 
-  ---version 3 test random placement 
+  ---version 3 test random placement horizontal and vertical
 
-  ---version 3.5 get game.js running from browser
+  ---version 3.5 get game.js running from browser, console.log(game) should show object with board, turn, etc
 
   ---version 4 show grid on UI
 
-  ---version 4.5 show grids to cheat, player and computer gameboard with ships
+  ---version 4.5 show grids to cheat, player and computer gameboard with ships (or console.log)
 
   ---version 4.7 hard coded player ships player can click to attack
 
