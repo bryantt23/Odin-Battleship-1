@@ -1,5 +1,5 @@
 import {Game} from "../src/game";
-import Ship from "../src/ship";
+import {Ship} from "../src/ship";
 
 test("checking constructor", () => {
   const game = new Game();
@@ -37,8 +37,19 @@ test("place player and player2(computer) ship at 0,0", () => {
   expect(game.player2Gameboard.grid[0][0]).toBeInstanceOf(Ship);
 });
 
+test("Player wins by hitting position (0,0)", () => {
+const game = new Game();
+const ship = new Ship(1);
+game.player2Gameboard.placeShip(ship, 0, 0);
+game.player1.attack(0, 0);
+console.log(game.player2Gameboard.grid[0][0]);
+expect(game.player2Gameboard.grid[0][0]).toBe('X');
+expect(game.gameOver).toBe(true);
+expect(game.winner).toBe(game.player1);
+});
+
 /* 
-  ---version 1 computer ship at 0,0 and player ship at 0,0
+  ---version 1 computer ship at 0,0 and player ship at 0,0 
   -test player attacks 0,0 and shows hit and shows game over and player is winner
   -test player attack 5,5 and shows miss and check for 'O' and turn change and game is not over and show computer turn
   -test player missed and computer attacks 0,0 and shows hit and shows game over and computer is winner
