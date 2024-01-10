@@ -1,4 +1,4 @@
-class Gameboard {
+export class Gameboard {
   constructor() {
     this.gridSize = 10;
     this.grid = Array(this.gridSize)
@@ -148,4 +148,4 @@ class Gameboard {
   };
 }
 
-export default Gameboard;
+

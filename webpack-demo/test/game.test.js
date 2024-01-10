@@ -1,30 +1,43 @@
-import Game from "../src/game";
+import {Game} from "../src/game";
 import Ship from "../src/ship";
 
 test("checking constructor", () => {
-    const game = new Game();
-  });
+  const game = new Game();
+});
 
-  test("place player ship at 0,0", () => {
-    const game = new Game();
-    const ship1 = new Ship(1);
-    game.player1Gameboard.placeShip(ship1, 0, 0);
-    console.log(game.player1Gameboard.grid[0][1])
+test("place player ship at 0,0", () => {
+  const game = new Game();
+  const ship1 = new Ship(1);
+  game.player1Gameboard.placeShip(ship1, 0, 0);
+  console.log(game.player1Gameboard.grid[0][1]);
   expect(game.player1Gameboard.grid[0][1]).toBeNull();
   expect(game.player1Gameboard.grid[0][0]).toBeInstanceOf(Ship);
-  });
+});
 
-  test("place player2 ship at 0,0", () => {
-    const game = new Game();
-    const ship1 = new Ship(1);
-    game.player2Gameboard.placeShip(ship1, 0, 0);
-    console.log(game.player2Gameboard.grid[0][1])
+test("place player2 ship at 0,0", () => {
+  const game = new Game();
+  const ship1 = new Ship(1);
+  game.player2Gameboard.placeShip(ship1, 0, 0);
+  console.log(game.player2Gameboard.grid[0][1]);
   expect(game.player2Gameboard.grid[0][1]).toBeNull();
   expect(game.player2Gameboard.grid[0][0]).toBeInstanceOf(Ship);
-  });
+});
 
-  /*
-  -add computer class on player class 
+test("place player and player2(computer) ship at 0,0", () => {
+  const game = new Game();
+  const ship = new Ship(1);
+  const ship1 = new Ship(1);
+  game.player1Gameboard.placeShip(ship, 0, 0);
+  game.player2Gameboard.placeShip(ship1, 0, 0);
+  console.log(game.player2Gameboard.grid[0][1]);
+  console.log(game.player1Gameboard.grid[0][1]);
+  expect(game.player1Gameboard.grid[0][1]).toBeNull();
+  expect(game.player1Gameboard.grid[0][0]).toBeInstanceOf(Ship);
+  expect(game.player2Gameboard.grid[0][1]).toBeNull();
+  expect(game.player2Gameboard.grid[0][0]).toBeInstanceOf(Ship);
+});
+
+/* 
   ---version 1 computer ship at 0,0 and player ship at 0,0
   -test player attacks 0,0 and shows hit and shows game over and player is winner
   -test player attack 5,5 and shows miss and check for 'O' and turn change and game is not over and show computer turn

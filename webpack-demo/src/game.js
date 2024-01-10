@@ -1,8 +1,8 @@
-import Gameboard from "./gameboard";
-import Player from "./player";
-import ComputerPlayer from "./computer";
+import {Gameboard} from "./gameboard";
+import {Player} from "./player";
+import {ComputerPlayer} from "./computer";
 
-class Game {
+export class Game {
   constructor() {
     this.player1Gameboard = new Gameboard();
     this.player2Gameboard = new Gameboard();
@@ -23,6 +23,6 @@ class Game {
   gameLoop() {}
 }
 
-export default Game
+
 
 
