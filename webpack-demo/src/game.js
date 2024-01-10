@@ -43,7 +43,36 @@ export class Game {
     }
   }
   switchPlayer() {
-    this.currentPlayer = this.currentPlayer === this.player1 ? this.player2 : this.player1;
+    this.currentPlayer =
+      this.currentPlayer === this.player1 ? this.player2 : this.player1;
   }
-  gameLoop() {}
+  gameLoop() {
+    const gameLoopInterval = setInterval(() => {
+      // Check if the game is over
+      if (this.gameOver) {
+        clearInterval(gameLoopInterval); // Stop the game loop
+        return;
+      }
+
+      // Check if it's the computer player's turn
+      if (this.currentPlayer === this.player2) {
+        this.player2.computerAttack(); // Computer player makes a random attack
+      } else {
+        this.handlePlayerAttack(row, column); // Directly call the player's attack
+      }
+
+      // Check for game over conditions
+      if (
+        this.player1Gameboard.areAllShipsSunk() ||
+        this.player2Gameboard.areAllShipsSunk()
+      ) {
+        this.gameOver = true;
+        console.log("Game over!");
+        console.log(this.currentPlayer.name + " is the winner!");
+      }
+
+      // Switch to the other player for the next turn
+      this.switchPlayer();
+    }, 1000); // Set the loop interval (adjust as needed)
+  }
 }
