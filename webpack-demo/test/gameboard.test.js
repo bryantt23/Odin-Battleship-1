@@ -1,5 +1,5 @@
-import Ship from "../src/ship";
-import Gameboard from "../src/gameboard";
+import {Ship} from "../src/ship";
+import {Gameboard} from "../src/gameboard";
 
 test("grid is working", () => {
   const board = new Gameboard();

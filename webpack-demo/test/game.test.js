@@ -1,52 +1,71 @@
-import {Game} from "../src/game";
-import {Ship} from "../src/ship";
+import { Game } from '../src/game';
+import { Ship } from '../src/ship';
 
-
-test("checking constructor", () => {
+test('checking constructor', () => {
   const game = new Game();
 });
 
-test("place player ship at 0,0", () => {
+test('place player ship at 0,0', () => {
   const game = new Game();
   const ship1 = new Ship(1);
   game.player1Gameboard.placeShip(ship1, 0, 0);
-  //console.log(game.player1Gameboard.grid[0][1]);
   expect(game.player1Gameboard.grid[0][1]).toBeNull();
   expect(game.player1Gameboard.grid[0][0]).toBeInstanceOf(Ship);
 });
 
-test("place player2 ship at 0,0", () => {
+test('place player2 ship at 0,0', () => {
   const game = new Game();
   const ship1 = new Ship(1);
   game.player2Gameboard.placeShip(ship1, 0, 0);
-  //console.log(game.player2Gameboard.grid[0][1]);
   expect(game.player2Gameboard.grid[0][1]).toBeNull();
   expect(game.player2Gameboard.grid[0][0]).toBeInstanceOf(Ship);
 });
 
-test("place player and player2(computer) ship at 0,0", () => {
+test('place player and player2(computer) ship at 0,0', () => {
   const game = new Game();
   const ship = new Ship(1);
   const ship1 = new Ship(1);
   game.player1Gameboard.placeShip(ship, 0, 0);
   game.player2Gameboard.placeShip(ship1, 0, 0);
-  //console.log(game.player2Gameboard.grid[0][1]);
-  //console.log(game.player1Gameboard.grid[0][1]);
   expect(game.player1Gameboard.grid[0][1]).toBeNull();
   expect(game.player1Gameboard.grid[0][0]).toBeInstanceOf(Ship);
   expect(game.player2Gameboard.grid[0][1]).toBeNull();
   expect(game.player2Gameboard.grid[0][0]).toBeInstanceOf(Ship);
 });
 
-test("Player wins by hitting position (0,0)", () => {
-const game = new Game();
-const ship = new Ship(1);
-game.player2Gameboard.placeShip(ship, 0, 0);
-game.playRound(0, 0);
-//console.log(game.player2Gameboard);
-expect(game.player2Gameboard.grid[0][0]).toBe('X');
-expect(game.gameOver).toBe(true);
-//expect(game.winner).toBe("player1");
+test('Player wins by hitting position (0,0)', () => {
+  const game = new Game();
+  const ship = new Ship(1);
+  game.player1Gameboard.placeShip(ship, 0, 0);
+  game.player2Gameboard.placeShip(ship, 0, 0);
+  game.playRound(0, 0);
+  expect(game.player2Gameboard.grid[0][0]).toBe('X');
+  expect(game.gameOver).toBe(true);
+  expect(game.winner.name).toBe('Player 1');
+});
+
+test('Player does not win by missing position (0,0)', () => {
+  const game = new Game();
+  const ship = new Ship(1);
+  game.player1Gameboard.placeShip(ship, 0, 0);
+  game.player2Gameboard.placeShip(ship, 0, 0);
+  game.playRound(0, 1);
+  expect(game.player2Gameboard.grid[0][0]).toBeInstanceOf(Ship);
+  expect(game.player2Gameboard.grid[0][1]).toBe('O');
+  expect(game.gameOver).toBe(false);
+  expect(game.winner).toBe(null);
+});
+
+test('Player does not win by hitting position (0,0), but not sinking entire ship', () => {
+  const game = new Game();
+  const ship = new Ship(3);
+  game.player1Gameboard.placeShip(ship, 0, 0);
+  game.player2Gameboard.placeShip(ship, 0, 0);
+  game.playRound(0, 1);
+  expect(game.player2Gameboard.grid[0][0]).toBeInstanceOf(Ship);
+  expect(game.player2Gameboard.grid[0][1]).toBe('X');
+  expect(game.gameOver).toBe(false);
+  expect(game.winner).toBe(null);
 });
 
 /* 

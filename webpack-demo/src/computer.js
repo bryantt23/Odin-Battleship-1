@@ -2,6 +2,7 @@ export class ComputerPlayer {
     constructor(gameboard) {
       this.gameboard = gameboard;
       this.usedCoordinates = new Set();
+      this.name = 'Computer';
     }
     getRandomCoordinates() {
       const availableCoordinates = [];
