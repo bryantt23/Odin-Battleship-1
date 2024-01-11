@@ -49,7 +49,7 @@ expect(game.winner).toBe(game.player1);
 });
 
 /* 
-  --Version 1
+  --Version 1(resolve why gameOver is false and define row and column in handlePlayerAttack function)
   -test player attacks 0,0 and shows hit and shows game over and player is winner
   -test player attack 5,5 and shows miss and check for 'O' and turn change and game is not over and show computer turn
   -test player missed and computer attacks 0,0 and shows hit and shows game over and computer is winner
