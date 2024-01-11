@@ -78,7 +78,8 @@ export class Gameboard {
 
     return false; // Ship cannot be rotated
   };
-  receiveAttack = (row, column, hit, miss) => {
+  receiveAttack = (row, column) => {
+    const hit='X', miss='O'
     // Check for valid coordinates
     if (
       row < 0 ||

@@ -33,7 +33,7 @@ export class Game {
     return false;
   }
 
-  handlePlayerAttack(row, column) {
+  handleAttack(row, column) {
     if (!this.gameOver) {
       if (this.currentPlayer === this.player1) {
         const isValidAttack = this.player1.attack(row, column);
@@ -64,12 +64,12 @@ export class Game {
   playRound(row, column) {
     // Check if it's the computer player's turn
     if (this.currentPlayer === this.player2) {
-      this.player2.computerAttack(); // Computer player makes a random attack
+      this.handleAttack(); // Computer player makes a random attack
     } else {
-      this.handlePlayerAttack(row, column); // Directly call the player's attack
+      this.handleAttack(row, column); // Directly call the player's attack
     }
 
-    /* NOTE: Not sure if this is required. Doesn't handlePlayerAttack do this stuff?
+    /* NOTE: Not sure if this is required. Doesn't handleAttack do this stuff?
 
     // Check for game over conditions
     if (this.gameOver) {

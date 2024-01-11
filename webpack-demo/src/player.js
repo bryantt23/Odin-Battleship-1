@@ -6,7 +6,7 @@ export class Player {
 
   attack(row, column) {
     // Check if the move is legal (not already attacked)
-    if (this.gameboard.receiveAttack(row, column, "X", "O")) {
+    if (this.gameboard.receiveAttack(row, column)) {
       console.log(`${this.name} attacks (${row}, ${column})`);
       return true; // Valid attack
     } else {
