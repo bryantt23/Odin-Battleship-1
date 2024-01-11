@@ -135,11 +135,12 @@ export class Gameboard {
     return false; // Not a ship or already sunk
   };
 
-  areAllShipsSunk = () => {
+ areAllShipsSunk = () => {
     // Check if all ships on the gameboard are sunk
     for (let r = 0; r < this.gridSize; r++) {
       for (let c = 0; c < this.gridSize; c++) {
-        if (!this.isShipSunk(r, c)) {
+        const cur = this.grid[r][c];
+         if (cur !== null && cur !== "X" && cur !== "O") {
           return false; // At least one ship is not sunk yet
         }
       }
