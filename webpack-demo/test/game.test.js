@@ -1,7 +1,7 @@
-import {Game} from '../src/game';
-import {Ship} from '../src/ship';
+import { Game } from "../src/game";
+import { Ship } from "../src/ship";
 
-test('place player ship at 0,0', () => {
+test("place player ship at 0,0", () => {
   const game = new Game();
   const ship1 = new Ship(1);
   game.player1Gameboard.placeShip(ship1, 0, 0);
@@ -9,7 +9,7 @@ test('place player ship at 0,0', () => {
   expect(game.player1Gameboard.grid[0][0]).toBeInstanceOf(Ship);
 });
 
-test('place player2 ship at 0,0', () => {
+test("place player2 ship at 0,0", () => {
   const game = new Game();
   const ship1 = new Ship(1);
   game.player2Gameboard.placeShip(ship1, 0, 0);
@@ -17,7 +17,7 @@ test('place player2 ship at 0,0', () => {
   expect(game.player2Gameboard.grid[0][0]).toBeInstanceOf(Ship);
 });
 
-test('place player and player2(computer) ship at 0,0', () => {
+test("place player and player2(computer) ship at 0,0", () => {
   const game = new Game();
   const ship = new Ship(1);
   const ship1 = new Ship(1);
@@ -29,76 +29,141 @@ test('place player and player2(computer) ship at 0,0', () => {
   expect(game.player2Gameboard.grid[0][0]).toBeInstanceOf(Ship);
 });
 
-test('Player wins by hitting position (0,0)', () => {
-    const game = new Game();
-    const ship = new Ship(1);
-    game.player1Gameboard.placeShip(ship, 0, 0);
-    game.player2Gameboard.placeShip(ship, 0, 0);
-    game.playRound(0, 0);
-    expect(game.player2Gameboard.grid[0][0]).toBe('X');
-    expect(game.gameOver).toBe(true);
-    expect(game.winner.name).toBe('Player 1');
-  });
-  
-  test('Player does not win by missing position (0,0)', () => {
-    const game = new Game();
-    const ship = new Ship(1);
-    game.player1Gameboard.placeShip(ship, 0, 0);
-    game.player2Gameboard.placeShip(ship, 0, 0);
-    game.playRound(0, 1);
-    expect(game.player2Gameboard.grid[0][0]).toBeInstanceOf(Ship);
-    expect(game.player2Gameboard.grid[0][1]).toBe('O');
-    expect(game.gameOver).toBe(false);
-    expect(game.winner).toBe(null);
-  });
-  
-  test('Player does not win by hitting position (0,0), but not sinking entire ship', () => {
-    const game = new Game();
-    const ship = new Ship(3);
-    game.player1Gameboard.placeShip(ship, 0, 0);
-    game.player2Gameboard.placeShip(ship, 0, 0);
-    game.playRound(0, 1);
-    expect(game.player2Gameboard.grid[0][0]).toBeInstanceOf(Ship);
-    expect(game.player2Gameboard.grid[0][1]).toBe('X');
-    expect(game.gameOver).toBe(false);
-    expect(game.winner).toBe(null);
+test("Player wins by hitting position (0,0)", () => {
+  const game = new Game();
+  const ship = new Ship(1);
+  game.player1Gameboard.placeShip(ship, 0, 0);
+  game.player2Gameboard.placeShip(ship, 0, 0);
+  game.playRound(0, 0);
+  expect(game.player2Gameboard.grid[0][0]).toBe("X");
+  expect(game.gameOver).toBe(true);
+  expect(game.winner.name).toBe("Player 1");
+});
+
+test("Player does not win by missing position (0,0)", () => {
+  const game = new Game();
+  const ship = new Ship(1);
+  game.player1Gameboard.placeShip(ship, 0, 0);
+  game.player2Gameboard.placeShip(ship, 0, 0);
+  game.playRound(0, 1);
+  expect(game.player2Gameboard.grid[0][0]).toBeInstanceOf(Ship);
+  expect(game.player2Gameboard.grid[0][1]).toBe("O");
+  expect(game.gameOver).toBe(false);
+  expect(game.winner).toBe(null);
+});
+
+test("Player does not win by hitting position (0,0), but not sinking entire ship", () => {
+  const game = new Game();
+  const ship = new Ship(3);
+  game.player1Gameboard.placeShip(ship, 0, 0);
+  game.player2Gameboard.placeShip(ship, 0, 0);
+  game.playRound(0, 1);
+  expect(game.player2Gameboard.grid[0][0]).toBeInstanceOf(Ship);
+  expect(game.player2Gameboard.grid[0][1]).toBe("X");
+  expect(game.gameOver).toBe(false);
+  expect(game.winner).toBe(null);
+});
+
+test("Player does not win by missing position (0,0), then computer wins", () => {
+  const game = new Game();
+  const shipPlayer = new Ship(1);
+  const shipComputer = new Ship(1);
+
+  // Place a ship for each player
+  game.player1Gameboard.placeShip(shipPlayer, 0, 0);
+  game.player2Gameboard.placeShip(shipComputer, 0, 0);
+
+  // Player attacks and misses
+  game.handleAttack(0, 1); // Player attacks position (0,1) and misses
+
+  // Mock computer's attack to always hit (0,0)
+  jest.spyOn(game.player2, "computerAttack").mockImplementation(() => {
+    game.player1Gameboard.receiveAttack(0, 0);
+    game.checkGameOver();
   });
 
-  test('Player does not win by missing position (0,0), then computer wins', () => {
+  // Execute the mocked computer's attack
+  game.player2.computerAttack();
+
+  // Check the game state
+  expect(game.player1Gameboard.grid[0][0]).toBe("X"); // Player's ship at (0,0) is hit
+  expect(game.gameOver).toBe(true); // Game should be over
+  expect(game.winner.name).toBe("Computer"); // Winner should be the computer
+});
+
+test("Player attacks (5,5) and misses and Computer attacks (0,0) and misses, game is not over", () => {
+  const game = new Game();
+  const shipPlayer = new Ship(1);
+  const shipComputer = new Ship(1);
+
+  game.player1Gameboard.placeShip(shipPlayer, 5, 5);
+  game.player2Gameboard.placeShip(shipComputer, 0, 0);
+
+  game.handleAttack(5, 5);
+
+  // Mock computer's attack to always hit (0,0)
+  jest.spyOn(game.player2, "computerAttack").mockImplementation(() => {
+    game.player1Gameboard.receiveAttack(0, 0);
+    game.checkGameOver();
+  });
+
+  // Execute the mocked computer's attack
+  game.player2.computerAttack();
+
+  expect(game.player1Gameboard.grid[0][0]).toBe("O");
+  expect(game.player2Gameboard.grid[5][5]).toBe("O");
+  expect(game.gameOver).toBe(false);
+  expect(game.winner).toBe(null);
+});
+
+test("Player attacks (5,5) and misses and Computer attacks (5,5) and misses, game is not over", () => {
+  const game = new Game();
+  const shipPlayer = new Ship(1);
+  const shipComputer = new Ship(1);
+
+  game.player1Gameboard.placeShip(shipPlayer, 0, 2);
+  game.player2Gameboard.placeShip(shipComputer, 0, 0);
+
+  game.handleAttack(5, 5);
+
+  game.player1Gameboard.receiveAttack(5, 5);
+  game.checkGameOver();
+
+  // Execute the mocked computer's attack
+  game.player2.computerAttack();
+
+  expect(game.player1Gameboard.grid[5][5]).toBe("O");
+  expect(game.player2Gameboard.grid[5][5]).toBe("O");
+  expect(game.gameOver).toBe(false);
+  expect(game.winner).toBe(null);
+});
+
+test("place 2 player ships and 2 Computer ships, one horiontal and one vertical, one on the edge and one in the middle", () => {
     const game = new Game();
-    const shipPlayer = new Ship(1);
-    const shipComputer = new Ship(1);
-  
-    // Place a ship for each player
-    game.player1Gameboard.placeShip(shipPlayer, 0, 0);
-    game.player2Gameboard.placeShip(shipComputer, 0, 0);
-  
-    // Player attacks and misses
-    game.handleAttack(0, 1); // Player attacks position (0,1) and misses
-  
-    // Mock computer's attack to always hit (0,0)
-    jest.spyOn(game.player2, 'computerAttack').mockImplementation(() => {
-      game.player1Gameboard.receiveAttack(0, 0);
-      game.checkGameOver();
-    });
-  
-    // Execute the mocked computer's attack
-    game.player2.computerAttack();
-  
-    // Check the game state
-    expect(game.player1Gameboard.grid[0][0]).toBe('X'); // Player's ship at (0,0) is hit
-    expect(game.gameOver).toBe(true); // Game should be over
-    expect(game.winner.name).toBe('Computer'); // Winner should be the computer
+    const playerShip1 = new Ship(2);
+    const playerShip2 = new Ship(3);
+    const computerShip1 = new Ship(2);
+    const computerShip2 = new Ship(3);
+
+    //horizontal ships in middle
+    game.player1Gameboard.placeShip(playerShip2, 0, 4, false);
+    game.player2Gameboard.placeShip(computerShip2, 0, 4, false);
+    //vertical ships on edge
+    game.player1Gameboard.placeShip(playerShip1, 0, 0, true);
+    game.player2Gameboard.placeShip(computerShip1, 0, 0, true);
+
+    expect(game.player1Gameboard.grid[0][4]).toBeInstanceOf(Ship);
+    expect(game.player1Gameboard.grid[0][0]).toBeInstanceOf(Ship);
+    expect(game.player2Gameboard.grid[0][4]).toBeInstanceOf(Ship);
+    expect(game.player2Gameboard.grid[0][0]).toBeInstanceOf(Ship);
+  });
+
+  test("random Computer ship placement horizontally and verically", () => {
+    
   });
 
 /* 
-  --Version 1
-  -test player attack 5,5 and shows miss and check for 'O' and turn change and game is not over and show computer turn
-  -test player missed and computer attacks 0,0 and shows hit and shows game over and computer is winner
-  -test player attacks 5,5 and computer attacks 5,5 and shows miss and check for 'O' and change turn to player and game is not over
-
-  ---version 2 use 2 ships with lengths of 2 and 3, one vertical, one horizontal, one touching the edge and one in the middle
-
+  TEST MULTIPlE ROUNDS WITH DIFFERENT WINNERS AND DIFFERENT SHIP LENGTHS AND GAME OVER AND GAME NOT OVER
   ---version 3 test random placement horizontal and vertical
 
   ---version 3.5 get game.js running from browser, console.log(game) should show object with board, turn, etc
