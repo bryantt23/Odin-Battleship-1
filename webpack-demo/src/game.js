@@ -11,34 +11,46 @@ export class Game {
 
     this.currentPlayer = this.player1;
     this.gameOver = false;
-    this.winner = "";
+    this.winner = null;
 
     //this.initializeGame();
     this.setupEventListeners();
   }
   setupEventListeners() {}
+  checkGameOver() {
+    // Check for game over condition
+    if (
+      this.player1Gameboard.areAllShipsSunk() ||
+      this.player2Gameboard.areAllShipsSunk()
+    ) {
+      this.gameOver = true;
+      this.winner = this.currentPlayer;
+      console.log("Game over!");
+      console.log(this.winner.name + " is the winner!");
+      return true;
+    }
+    return false;
+  }
   handlePlayerAttack(row, column) {
     if (!this.gameOver) {
       if (this.currentPlayer === this.player1) {
         const isValidAttack = this.player1.attack(row, column);
         if (isValidAttack) {
+          if (this.checkGameOver()) {
+            return;
+          }
           // Switch to the other player
-         this.switchPlayer();
+          this.switchPlayer();
         }
       } else if (this.currentPlayer === this.player2) {
         this.player2.computerAttack();
+        if (this.checkGameOver()) {
+          return;
+        }
         // Switch to the other player
         this.switchPlayer();
       }
       // Check for game over condition
-      if (
-        this.player1Gameboard.areAllShipsSunk() ||
-        this.player2Gameboard.areAllShipsSunk()
-      ) {
-        this.gameOver = true;
-        console.log("Game over!");
-        console.log(this.currentPlayer.name + " is the winner!");
-      }
     }
   }
   switchPlayer() {
@@ -47,31 +59,13 @@ export class Game {
   }
   initializeGame() {
     //TODO initialize computer ships and DOM stuff
-    
   }
-  playRound(row, column){
-    
-        // Check if it's the computer player's turn
-        if (this.currentPlayer === this.player2) {
-          this.player2.computerAttack(); // Computer player makes a random attack
-        } else {
-        console.log("hello")
-          this.handlePlayerAttack(row, column); // Directly call the player's attack
-        }
-        // Check for game over conditions
-        if (
-          this.player1Gameboard.areAllShipsSunk() ||
-          this.player2Gameboard.areAllShipsSunk()
-        ) {
-          this.gameOver = true;
-          this.winner = this.currentPlayer;
-          console.log("Game over!");
-          console.log(this.currentPlayer.name + " is the winner!");
-          return this.currentPlayer.name + " is the winner!";
-        }
-  
-        // Switch to the other player for the next turn
-        this.switchPlayer();
-
+  playRound(row, column) {
+    // Check if it's the computer player's turn
+    if (this.currentPlayer === this.player2) {
+      this.player2.computerAttack(); // Computer player makes a random attack
+    } else {
+      this.handlePlayerAttack(row, column); // Directly call the player's attack
+    }
   }
 }

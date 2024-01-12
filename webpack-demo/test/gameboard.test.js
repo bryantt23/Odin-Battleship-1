@@ -1,9 +1,8 @@
-import Ship from "../src/ship";
-import Gameboard from "../src/gameboard";
+import {Ship} from '../src/ship';
+import {Gameboard} from '../src/gameboard';
 
 test("grid is working", () => {
   const board = new Gameboard();
-  //console.log(board);
 });
 
 test("place ship of length one", () => {
@@ -52,8 +51,6 @@ test("place ship horizontally with overlap", () => {
   expect(board.grid[0][0]).toBeInstanceOf(Ship);
   expect(board.grid[0][1]).toBeInstanceOf(Ship);
   expect(board.grid[0][3]).toBeNull();
-
-  //console.log(board)
 });
 
 test("place ship vertically of length 3", () => {
@@ -66,8 +63,6 @@ test("place ship vertically of length 3", () => {
   expect(board.grid[4][3]).toBeInstanceOf(Ship);
   expect(board.grid[5][3]).toBeInstanceOf(Ship);
   expect(board.grid[2][0]).toBeNull();
-
-  //console.log(board)
 });
 
 test("Can't place ship vertically with length of 3 and overlap", () => {
@@ -77,8 +72,6 @@ test("Can't place ship vertically with length of 3 and overlap", () => {
 
   expect(board.placeShip(ship3, 9, 9, true)).toBe(false);
   expect(board.placeShip(ship2, 9, 9)).toBe(false);
-
-  //console.log(board)
 });
 
 test("Multiple ships and multiple directions", () => {
@@ -95,8 +88,6 @@ test("Multiple ships and multiple directions", () => {
   expect(board.grid[2][8]).toBeInstanceOf(Ship);
   expect(board.grid[0][8]).toBeInstanceOf(Ship);
   expect(board.grid[2][0]).toBeNull();
-
-  //console.log(board)
 });
 
 test("Should return false for invalid attack coordinates", () => {
@@ -106,8 +97,6 @@ test("Should return false for invalid attack coordinates", () => {
   expect(board.receiveAttack(11, 5)).toBe(false);
   expect(board.receiveAttack(2, 5)).toBe(true);
   expect(board.receiveAttack(0, 5)).toBe(true);
-
-  //console.log(board)
 });
 
 test("Should return false for attacking the same spot twice", () => {
@@ -117,8 +106,6 @@ test("Should return false for attacking the same spot twice", () => {
   expect(board.receiveAttack(2, 3, "X", "O")).toBe(false);
   board.receiveAttack(2, 5, "X", "X");
   expect(board.receiveAttack(2, 5, "X", "X")).toBe(false);
-
-  //console.log(board)
 });
 
 test("Should mark a spot as missed when attacking an empty cell", () => {
@@ -126,8 +113,6 @@ test("Should mark a spot as missed when attacking an empty cell", () => {
 
   expect(board.receiveAttack(2, 3, "X", "O")).toBe(true);
   expect(board.grid[2][3]).toBe("O");
-
-  //console.log(board)
 });
 
 test("should mark a spot as hit when attacking a ship", () => {
@@ -141,6 +126,4 @@ test("should mark a spot as hit when attacking a ship", () => {
   expect(board.grid[4][5]).toBe("X");
   expect(board.receiveAttack(4, 8, "X", "O")).toBe(true);
   expect(board.grid[4][8]).toBe("X");
-
-  //console.log(board)
 });
