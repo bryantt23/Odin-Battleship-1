@@ -1,5 +1,8 @@
-export class ComputerPlayer {
+import { Player } from './player';
+
+export class ComputerPlayer extends Player {
     constructor(gameboard) {
+      super('Computer');
       this.gameboard = gameboard;
       this.usedCoordinates = new Set();
     }
