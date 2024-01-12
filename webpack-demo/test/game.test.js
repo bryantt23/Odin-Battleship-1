@@ -1,11 +1,6 @@
 import {Game} from '../src/game';
 import {Ship} from '../src/ship';
 
-
-test('checking constructor', () => {
-  const game = new Game();
-});
-
 test('place player ship at 0,0', () => {
   const game = new Game();
   const ship1 = new Ship(1);
@@ -67,6 +62,33 @@ test('Player wins by hitting position (0,0)', () => {
     expect(game.player2Gameboard.grid[0][1]).toBe('X');
     expect(game.gameOver).toBe(false);
     expect(game.winner).toBe(null);
+  });
+
+  test('Player does not win by missing position (0,0), then computer wins', () => {
+    const game = new Game();
+    const shipPlayer = new Ship(1);
+    const shipComputer = new Ship(1);
+  
+    // Place a ship for each player
+    game.player1Gameboard.placeShip(shipPlayer, 0, 0);
+    game.player2Gameboard.placeShip(shipComputer, 0, 0);
+  
+    // Player attacks and misses
+    game.handleAttack(0, 1); // Player attacks position (0,1) and misses
+  
+    // Mock computer's attack to always hit (0,0)
+    jest.spyOn(game.player2, 'computerAttack').mockImplementation(() => {
+      game.player1Gameboard.receiveAttack(0, 0);
+      game.checkGameOver();
+    });
+  
+    // Execute the mocked computer's attack
+    game.player2.computerAttack();
+  
+    // Check the game state
+    expect(game.player1Gameboard.grid[0][0]).toBe('X'); // Player's ship at (0,0) is hit
+    expect(game.gameOver).toBe(true); // Game should be over
+    expect(game.winner.name).toBe('Computer'); // Winner should be the computer
   });
 
 /* 

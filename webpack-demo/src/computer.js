@@ -26,7 +26,7 @@ export class ComputerPlayer extends Player {
       const coordinates = this.getRandomCoordinates();
       if (coordinates) {
         const { row, column } = coordinates;
-        if (this.gameboard.receiveAttack(row, column, "X", "O")) {
+        if (this.gameboard.receiveAttack(row, column)) {
           console.log(`Computer attacks (${row}, ${column})`);
           this.usedCoordinates.add(`${row},${column}`);
         }

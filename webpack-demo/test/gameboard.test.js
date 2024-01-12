@@ -10,8 +10,6 @@ test("place ship of length one", () => {
   const ship1 = new Ship(1);
 
   board.placeShip(ship1, 0, 0);
-  console.log(board);
-  console.log(board.grid[0][0]);
   expect(board.grid[0][1]).toBeNull();
   expect(board.grid[0][0]).toBeInstanceOf(Ship);
 });
@@ -102,8 +100,8 @@ test("Should return false for invalid attack coordinates", () => {
 test("Should return false for attacking the same spot twice", () => {
   const board = new Gameboard();
 
-  board.receiveAttack(2, 3, "X", "O");
-  expect(board.receiveAttack(2, 3, "X", "O")).toBe(false);
+  board.receiveAttack(2, 3);
+  expect(board.receiveAttack(2, 3)).toBe(false);
   board.receiveAttack(2, 5, "X", "X");
   expect(board.receiveAttack(2, 5, "X", "X")).toBe(false);
 });
@@ -111,7 +109,7 @@ test("Should return false for attacking the same spot twice", () => {
 test("Should mark a spot as missed when attacking an empty cell", () => {
   const board = new Gameboard();
 
-  expect(board.receiveAttack(2, 3, "X", "O")).toBe(true);
+  expect(board.receiveAttack(2, 3)).toBe(true);
   expect(board.grid[2][3]).toBe("O");
 });
 
@@ -122,8 +120,8 @@ test("should mark a spot as hit when attacking a ship", () => {
   board.placeShip(ship, 4, 5, true);
   board.placeShip(ship2, 4, 8, true);
 
-  expect(board.receiveAttack(4, 5, "X", "O")).toBe(true);
+  expect(board.receiveAttack(4, 5)).toBe(true);
   expect(board.grid[4][5]).toBe("X");
-  expect(board.receiveAttack(4, 8, "X", "O")).toBe(true);
+  expect(board.receiveAttack(4, 8)).toBe(true);
   expect(board.grid[4][8]).toBe("X");
 });
