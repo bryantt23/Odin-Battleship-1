@@ -139,28 +139,79 @@ test("Player attacks (5,5) and misses and Computer attacks (5,5) and misses, gam
 });
 
 test("place 2 player ships and 2 Computer ships, one horiontal and one vertical, one on the edge and one in the middle", () => {
-    const game = new Game();
-    const playerShip1 = new Ship(2);
-    const playerShip2 = new Ship(3);
-    const computerShip1 = new Ship(2);
-    const computerShip2 = new Ship(3);
+  const game = new Game();
+  const playerShip1 = new Ship(2);
+  const playerShip2 = new Ship(3);
+  const computerShip1 = new Ship(2);
+  const computerShip2 = new Ship(3);
 
-    //horizontal ships in middle
-    game.player1Gameboard.placeShip(playerShip2, 0, 4, false);
-    game.player2Gameboard.placeShip(computerShip2, 0, 4, false);
-    //vertical ships on edge
-    game.player1Gameboard.placeShip(playerShip1, 0, 0, true);
-    game.player2Gameboard.placeShip(computerShip1, 0, 0, true);
+  //horizontal ships in middle
+  game.player1Gameboard.placeShip(playerShip2, 0, 4, false);
+  game.player2Gameboard.placeShip(computerShip2, 0, 4, false);
+  //vertical ships on edge
+  game.player1Gameboard.placeShip(playerShip1, 0, 0, true);
+  game.player2Gameboard.placeShip(computerShip1, 0, 0, true);
 
-    expect(game.player1Gameboard.grid[0][4]).toBeInstanceOf(Ship);
-    expect(game.player1Gameboard.grid[0][0]).toBeInstanceOf(Ship);
-    expect(game.player2Gameboard.grid[0][4]).toBeInstanceOf(Ship);
-    expect(game.player2Gameboard.grid[0][0]).toBeInstanceOf(Ship);
-  });
+  expect(game.player1Gameboard.grid[0][4]).toBeInstanceOf(Ship);
+  expect(game.player1Gameboard.grid[0][0]).toBeInstanceOf(Ship);
+  expect(game.player2Gameboard.grid[0][4]).toBeInstanceOf(Ship);
+  expect(game.player2Gameboard.grid[0][0]).toBeInstanceOf(Ship);
+});
 
-  test("random Computer ship placement horizontally and verically", () => {
-    
-  });
+test("Player wins by hitting all Computer's ships with different orientations", () => {
+  const game = new Game();
+  const playerShip1 = new Ship(3);
+  const playerShip2 = new Ship(4);
+  const computerShip1 = new Ship(2);
+  const computerShip2 = new Ship(3);
+
+  game.player1Gameboard.placeShip(playerShip1, 0, 0, true);
+  game.player1Gameboard.placeShip(playerShip2, 2, 2, false);
+  game.player2Gameboard.placeShip(computerShip1, 4, 4, true);
+  game.player2Gameboard.placeShip(computerShip2, 6, 6, false);
+
+  game.playRound(4, 4);
+  game.playRound(0, 0); 
+  game.playRound(5, 4); 
+  game.playRound(3, 2);
+  game.playRound(6, 6); 
+  game.playRound(4, 5); 
+  game.playRound(6, 7); 
+  game.playRound(5, 5); 
+  game.playRound(6, 8); 
+
+  expect(game.player1Gameboard.areAllShipsSunk()).toBe(false);
+  expect(game.player2Gameboard.areAllShipsSunk()).toBe(true);
+  expect(game.gameOver).toBe(true);
+  expect(game.winner.name).toBe("Player 1");
+});
+
+test("Computer wins by hitting all Player's ships with different orientations", () => {
+  const game = new Game();
+  const playerShip1 = new Ship(1);
+  const playerShip2 = new Ship(1);
+  const computerShip1 = new Ship(1);
+  const computerShip2 = new Ship(1);
+
+  game.player1Gameboard.placeShip(playerShip1, 0, 0, true);
+  game.player1Gameboard.placeShip(playerShip2, 2, 2, false);
+  game.player2Gameboard.placeShip(computerShip1, 4, 4, true);
+  game.player2Gameboard.placeShip(computerShip2, 6, 6, false);
+
+  game.playRound(7, 4);
+  game.playRound(7, 7);
+  game.playRound(2, 2);
+
+  console.log(game.player2Gameboard.grid);
+  console.log(game.player1Gameboard.grid);
+
+  expect(game.player1Gameboard.areAllShipsSunk()).toBe(true);
+  expect(game.player2Gameboard.areAllShipsSunk()).toBe(false);
+  expect(game.gameOver).toBe(true);
+  expect(game.winner.name).toBe("Computer");
+});
+
+test("random Computer ship placement horizontally and verically", () => {});
 
 /* 
   TEST MULTIPlE ROUNDS WITH DIFFERENT WINNERS AND DIFFERENT SHIP LENGTHS AND GAME OVER AND GAME NOT OVER
