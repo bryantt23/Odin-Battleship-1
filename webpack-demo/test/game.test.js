@@ -230,13 +230,6 @@ test("Computer wins by hitting all Player's ships with different orientations", 
   overrideComputerAttack(game, 2, 2);
   game.handleAttack(); // This will use the mocked computer attack
 
-  // Log statements for debugging
-  console.log(
-    "Player 2 (Computer) Gameboard Grid:",
-    game.player2Gameboard.grid
-  );
-  console.log("Player 1 Gameboard Grid:", game.player1Gameboard.grid);
-
   // Assertions
   expect(game.player1Gameboard.areAllShipsSunk()).toBe(true);
   expect(game.player2Gameboard.areAllShipsSunk()).toBe(false);
@@ -390,12 +383,7 @@ test("Computer wins by hitting all Player's ships with different orientations an
   overrideComputerAttack(game, 9, 0); // Set up computer's mock attack for (4, 5)
   game.handleAttack(); // Computer's turn
 
-  // Log statements for debugging
-  console.log(
-    "Player 2 (Computer) Gameboard Grid:",
-    game.player2Gameboard.grid
-  );
-  console.log("Player 1 Gameboard Grid:", game.player1Gameboard.grid);
+
 
   // Assertions
   expect(game.player1Gameboard.areAllShipsSunk()).toBe(true);
@@ -404,6 +392,15 @@ test("Computer wins by hitting all Player's ships with different orientations an
   expect(game.winner.name).toBe("Computer");
 });
 
+function isHorizontal() {
+  const direction = Math.floor(Math.random() * 2) == 0;
+  if (direction) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 test("random Computer ship placement horizontally and verically", () => {
   const game = new Game();
   const computerShip1 = new Ship(2);
@@ -411,28 +408,108 @@ test("random Computer ship placement horizontally and verically", () => {
   const computerShip3 = new Ship(3);
   const computerShip4 = new Ship(4);
   const computerShip5 = new Ship(5);
-  const randomCoordinate1 = game.player2.getRandomCoordinates();
-  const randomCoordinate2 = game.player2.getRandomCoordinates();
-  const randomCoordinate3 = game.player2.getRandomCoordinates();
-  const randomCoordinate4 = game.player2.getRandomCoordinates();
-  const randomCoordinate5 = game.player2.getRandomCoordinates();
+  let randomCoordinate1 = game.player2.getRandomCoordinates();
+  let randomCoordinate2 = game.player2.getRandomCoordinates();
+  let randomCoordinate3 = game.player2.getRandomCoordinates();
+  let randomCoordinate4 = game.player2.getRandomCoordinates();
+  let randomCoordinate5 = game.player2.getRandomCoordinates();
 
-  console.log(randomCoordinate1)
-  console.log(randomCoordinate1.row)
   // Place computer ships randomly using your getRandomCoordinates function
-  game.player2Gameboard.placeShip(computerShip1,randomCoordinate1.row, randomCoordinate1.column, true);
-  //game.player2Gameboard.placeShip(computerShip2, false);
-  //game.player2Gameboard.placeShip(computerShip3, true);
-
-  console.log(
-    "Player 2 (Computer) Gameboard Grid:",
-    game.player2Gameboard.grid
+  let ship1 = game.player2Gameboard.placeShip(
+    computerShip1,
+    randomCoordinate1.row,
+    randomCoordinate1.column,
+    isHorizontal()
   );
+
+  while (ship1 === false) {
+    randomCoordinate1 = game.player2.getRandomCoordinates();
+    ship1 = game.player2Gameboard.placeShip(
+      computerShip1,
+      randomCoordinate1.row,
+      randomCoordinate1.column,
+      isHorizontal()
+    );
+  }
+
+  let ship2 = game.player2Gameboard.placeShip(
+    computerShip2,
+    randomCoordinate2.row,
+    randomCoordinate2.column,
+    isHorizontal()
+  );
+
+  while (ship2 === false) {
+    randomCoordinate2 = game.player2.getRandomCoordinates();
+    ship2 = game.player2Gameboard.placeShip(
+      computerShip2,
+      randomCoordinate2.row,
+      randomCoordinate2.column,
+      isHorizontal()
+    );
+  }
+
+  let ship3 = game.player2Gameboard.placeShip(
+    computerShip3,
+    randomCoordinate3.row,
+    randomCoordinate3.column,
+    isHorizontal()
+  );
+
+  while (ship3 === false) {
+    randomCoordinate3 = game.player2.getRandomCoordinates();
+    ship3 = game.player2Gameboard.placeShip(
+      computerShip3,
+      randomCoordinate3.row,
+      randomCoordinate3.column,
+      isHorizontal()
+    );
+  }
+
+  let ship4 = game.player2Gameboard.placeShip(
+    computerShip4,
+    randomCoordinate4.row,
+    randomCoordinate4.column,
+    isHorizontal()
+  );
+
+  while (ship4 === false) {
+    randomCoordinate4 = game.player2.getRandomCoordinates();
+    ship4 = game.player2Gameboard.placeShip(
+      computerShip4,
+      randomCoordinate4.row,
+      randomCoordinate4.column,
+      isHorizontal()
+    );
+  }
+
+  let ship5 = game.player2Gameboard.placeShip(
+    computerShip5,
+    randomCoordinate5.row,
+    randomCoordinate5.column,
+    isHorizontal()
+  );
+
+  while (ship5 === false) {
+    randomCoordinate5 = game.player2.getRandomCoordinates();
+    ship5 = game.player2Gameboard.placeShip(
+      computerShip5,
+      randomCoordinate5.row,
+      randomCoordinate5.column,
+      isHorizontal()
+    );
+  }
 
   // Ensure the ships are placed successfully
   expect(
     game.player2Gameboard.grid.flat().filter((cell) => cell !== null).length
-  ).toBe(computerShip1.length + computerShip2.length + computerShip3.length);
+  ).toBe(
+    computerShip1.length +
+      computerShip2.length +
+      computerShip3.length +
+      computerShip4.length +
+      computerShip5.length
+  );
 });
 
 // test("Place all ships on the board w/ different orientations", () => {
@@ -447,7 +524,7 @@ test("random Computer ship placement horizontally and verically", () => {
 //     const computerShip3 = new Ship(5);
 //     const computerShip4 = new Ship(3);
 //     const computerShip5 = new Ship(2);
-  
+
 //     game.player1Gameboard.placeShip(playerShip1, 0, 0, true);
 //     game.player1Gameboard.placeShip(playerShip2, 2, 2, false);
 //     game.player1Gameboard.placeShip(playerShip3, 5, 0, true);
@@ -458,7 +535,7 @@ test("random Computer ship placement horizontally and verically", () => {
 //     game.player2Gameboard.placeShip(computerShip3, 5, 0, true);
 //     game.player2Gameboard.placeShip(computerShip4, 7, 7, true);
 //     game.player2Gameboard.placeShip(computerShip5, 3, 1, true);
-  
+
 //     // Log statements for debugging
 //     console.log(
 //       "Player 2 (Computer) Gameboard Grid:",
