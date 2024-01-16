@@ -406,51 +406,66 @@ test("Computer wins by hitting all Player's ships with different orientations an
 
 test("random Computer ship placement horizontally and verically", () => {
   const game = new Game();
-  const computerShip1 = new Ship(3);
-  const computerShip2 = new Ship(4);
-  const computerShip3 = new Ship(5);
+  const computerShip1 = new Ship(2);
+  const computerShip2 = new Ship(3);
+  const computerShip3 = new Ship(3);
+  const computerShip4 = new Ship(4);
+  const computerShip5 = new Ship(5);
+  const randomCoordinate1 = game.player2.getRandomCoordinates();
+  const randomCoordinate2 = game.player2.getRandomCoordinates();
+  const randomCoordinate3 = game.player2.getRandomCoordinates();
+  const randomCoordinate4 = game.player2.getRandomCoordinates();
+  const randomCoordinate5 = game.player2.getRandomCoordinates();
 
+  console.log(randomCoordinate1)
+  console.log(randomCoordinate1.row)
   // Place computer ships randomly using your getRandomCoordinates function
-  game.player2Gameboard.placeShip(
-    computerShip1,getRandomCoordinates(),
-    true
-  );
-  game.player2Gameboard.placeShip(
-    computerShip2,getRandomCoordinates(),
-    false
-  );
-  game.player2Gameboard.placeShip(
-    computerShip3,getRandomCoordinates(),
-    true
-  );
+  game.player2Gameboard.placeShip(computerShip1,randomCoordinate1.row, randomCoordinate1.column, true);
+  //game.player2Gameboard.placeShip(computerShip2, false);
+  //game.player2Gameboard.placeShip(computerShip3, true);
 
   console.log(
     "Player 2 (Computer) Gameboard Grid:",
     game.player2Gameboard.grid
   );
 
-   // Ensure the ships are placed successfully
+  // Ensure the ships are placed successfully
   expect(
     game.player2Gameboard.grid.flat().filter((cell) => cell !== null).length
   ).toBe(computerShip1.length + computerShip2.length + computerShip3.length);
-
-  function getRandomCoordinates() {
-    const availableCoordinates = [];
-    for (let row = 0; row < this.gameboard.gridSize; row++) {
-      for (let column = 0; column < this.gameboard.gridSize; column++) {
-        const coordinate = `${row},${column}`;
-        if (!this.usedCoordinates.has(coordinate)) {
-          availableCoordinates.push({ row, column });
-        }
-      }
-    }
-    if (availableCoordinates.length === 0) {
-      return null; //All coordinates have been used
-    }
-    const randomIndex = Math.floor(Math.random() * availableCoordinates.length);
-    return availableCoordinates[randomIndex];
-  }
 });
+
+// test("Place all ships on the board w/ different orientations", () => {
+//     const game = new Game();
+//     const playerShip1 = new Ship(3);
+//     const playerShip2 = new Ship(4);
+//     const playerShip3 = new Ship(5);
+//     const playerShip4 = new Ship(3);
+//     const playerShip5 = new Ship(2);
+//     const computerShip1 = new Ship(3);
+//     const computerShip2 = new Ship(4);
+//     const computerShip3 = new Ship(5);
+//     const computerShip4 = new Ship(3);
+//     const computerShip5 = new Ship(2);
+  
+//     game.player1Gameboard.placeShip(playerShip1, 0, 0, true);
+//     game.player1Gameboard.placeShip(playerShip2, 2, 2, false);
+//     game.player1Gameboard.placeShip(playerShip3, 5, 0, true);
+//     game.player1Gameboard.placeShip(playerShip4, 7, 7, true);
+//     game.player1Gameboard.placeShip(playerShip5, 3, 1, true);
+//     game.player2Gameboard.placeShip(computerShip1, 0, 0, true);
+//     game.player2Gameboard.placeShip(computerShip2, 2, 2, false);
+//     game.player2Gameboard.placeShip(computerShip3, 5, 0, true);
+//     game.player2Gameboard.placeShip(computerShip4, 7, 7, true);
+//     game.player2Gameboard.placeShip(computerShip5, 3, 1, true);
+  
+//     // Log statements for debugging
+//     console.log(
+//       "Player 2 (Computer) Gameboard Grid:",
+//       game.player2Gameboard.grid
+//     );
+//     console.log("Player 1 Gameboard Grid:", game.player1Gameboard.grid);
+//   });
 
 /* 
   ---version 3 multiple tests for random placement horizontal and vertical
