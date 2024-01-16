@@ -170,21 +170,40 @@ test("Player wins by hitting all Computer's ships with different orientations", 
   game.player2Gameboard.placeShip(computerShip1, 4, 4, true);
   game.player2Gameboard.placeShip(computerShip2, 6, 6, false);
 
-  game.playRound(4, 4);
-  game.playRound(0, 0); 
-  game.playRound(5, 4); 
-  game.playRound(3, 2);
-  game.playRound(6, 6); 
-  game.playRound(4, 5); 
-  game.playRound(6, 7); 
-  game.playRound(5, 5); 
-  game.playRound(6, 8); 
+  // Player's first attack and Computer's response
+  game.handleAttack(4, 4); // Player attacks
+  overrideComputerAttack(game, 0, 0); // Set up computer's mock attack for (0, 0)
+  game.handleAttack(); // Computer's turn
 
+  // Player's second attack and Computer's response
+  game.handleAttack(5, 4); // Player attacks
+  overrideComputerAttack(game, 3, 2); // Set up computer's mock attack for (3, 2)
+  game.handleAttack(); // Computer's turn
+
+  // Continue the pattern with the specified coordinates...
+  game.handleAttack(6, 6); // Player attacks
+  overrideComputerAttack(game, 4, 5); // Set up computer's mock attack for (4, 5)
+  game.handleAttack(); // Computer's turn
+
+  game.handleAttack(6, 7); // Player attacks
+  overrideComputerAttack(game, 5, 5); // Set up computer's mock attack for (5, 5)
+  game.handleAttack(); // Computer's turn
+
+  game.handleAttack(6, 8); // Player attacks
+
+  // Assertions
   expect(game.player1Gameboard.areAllShipsSunk()).toBe(false);
   expect(game.player2Gameboard.areAllShipsSunk()).toBe(true);
   expect(game.gameOver).toBe(true);
   expect(game.winner.name).toBe("Player 1");
 });
+
+function overrideComputerAttack(game, row, column) {
+  jest.spyOn(game.player2, "computerAttack").mockImplementation(() => {
+    game.player1Gameboard.receiveAttack(row, column);
+    game.checkGameOver();
+  });
+}
 
 test("Computer wins by hitting all Player's ships with different orientations", () => {
   const game = new Game();
@@ -192,30 +211,249 @@ test("Computer wins by hitting all Player's ships with different orientations", 
   const playerShip2 = new Ship(1);
   const computerShip1 = new Ship(1);
   const computerShip2 = new Ship(1);
-
   game.player1Gameboard.placeShip(playerShip1, 0, 0, true);
   game.player1Gameboard.placeShip(playerShip2, 2, 2, false);
   game.player2Gameboard.placeShip(computerShip1, 4, 4, true);
   game.player2Gameboard.placeShip(computerShip2, 6, 6, false);
 
-  game.playRound(7, 4);
-  game.playRound(7, 7);
-  game.playRound(2, 2);
+  // Player's turn
+  game.handleAttack(7, 4);
 
-  console.log(game.player2Gameboard.grid);
-  console.log(game.player1Gameboard.grid);
+  // Computer's turn with mock attack
+  overrideComputerAttack(game, 0, 0);
+  game.handleAttack(); // This will use the mocked computer attack
 
+  // Player's turn
+  game.handleAttack(2, 2);
+
+  // Computer's turn with mock attack
+  overrideComputerAttack(game, 2, 2);
+  game.handleAttack(); // This will use the mocked computer attack
+
+  // Log statements for debugging
+  console.log(
+    "Player 2 (Computer) Gameboard Grid:",
+    game.player2Gameboard.grid
+  );
+  console.log("Player 1 Gameboard Grid:", game.player1Gameboard.grid);
+
+  // Assertions
   expect(game.player1Gameboard.areAllShipsSunk()).toBe(true);
   expect(game.player2Gameboard.areAllShipsSunk()).toBe(false);
   expect(game.gameOver).toBe(true);
   expect(game.winner.name).toBe("Computer");
 });
 
-test("random Computer ship placement horizontally and verically", () => {});
+test("Player wins by hitting all Computer's ships with different orientations and longer lengths", () => {
+  const game = new Game();
+  const playerShip1 = new Ship(3);
+  const playerShip2 = new Ship(4);
+  const playerShip3 = new Ship(5);
+  const computerShip1 = new Ship(3);
+  const computerShip2 = new Ship(4);
+  const computerShip3 = new Ship(5);
+
+  game.player1Gameboard.placeShip(playerShip1, 0, 0, true);
+  game.player1Gameboard.placeShip(playerShip2, 2, 2, false);
+  game.player1Gameboard.placeShip(playerShip3, 5, 0, true);
+  game.player2Gameboard.placeShip(computerShip1, 0, 0, true);
+  game.player2Gameboard.placeShip(computerShip2, 2, 2, false);
+  game.player2Gameboard.placeShip(computerShip3, 5, 0, true);
+
+  // Player's first attack and Computer's response
+  game.handleAttack(5, 0); // Player attacks
+  overrideComputerAttack(game, 0, 0); // Set up computer's mock attack for (0, 0)
+  game.handleAttack(); // Computer's turn
+
+  // Player's second attack and Computer's response
+  game.handleAttack(6, 0); // Player attacks
+  overrideComputerAttack(game, 1, 0); // Set up computer's mock attack for (3, 2)
+  game.handleAttack(); // Computer's turn
+
+  game.handleAttack(7, 0); // Player attacks
+  overrideComputerAttack(game, 2, 0); // Set up computer's mock attack for (4, 5)
+  game.handleAttack(); // Computer's turn
+
+  game.handleAttack(8, 0); // Player attacks
+  overrideComputerAttack(game, 2, 2); // Set up computer's mock attack for (5, 5)
+  game.handleAttack(); // Computer's turn
+
+  game.handleAttack(9, 0); // Player attacks
+  overrideComputerAttack(game, 2, 3); // Set up computer's mock attack for (0, 0)
+  game.handleAttack(); // Computer's turn
+
+  game.handleAttack(2, 3); // Player attacks
+  overrideComputerAttack(game, 2, 4); // Set up computer's mock attack for (3, 2)
+  game.handleAttack(); // Computer's turn
+
+  // Continue the pattern with the specified coordinates...
+  game.handleAttack(2, 2); // Player attacks
+  overrideComputerAttack(game, 2, 5); // Set up computer's mock attack for (4, 5)
+  game.handleAttack(); // Computer's turn
+
+  game.handleAttack(2, 4); // Player attacks
+  overrideComputerAttack(game, 7, 6); // Set up computer's mock attack for (5, 5)
+  game.handleAttack(); // Computer's turn
+
+  game.handleAttack(2, 5); // Player attacks
+  overrideComputerAttack(game, 6, 6); // Set up computer's mock attack for (0, 0)
+  game.handleAttack(); // Computer's turn
+
+  game.handleAttack(0, 0); // Player attacks
+  overrideComputerAttack(game, 8, 4); // Set up computer's mock attack for (3, 2)
+  game.handleAttack(); // Computer's turn
+
+  game.handleAttack(1, 0); // Player attacks
+  overrideComputerAttack(game, 5, 0); // Set up computer's mock attack for (4, 5)
+  game.handleAttack(); // Computer's turn
+
+  game.handleAttack(2, 0); // Player attacks
+
+  // Log statements for debugging
+  console.log(
+    "Player 2 (Computer) Gameboard Grid:",
+    game.player2Gameboard.grid
+  );
+  console.log("Player 1 Gameboard Grid:", game.player1Gameboard.grid);
+
+  // Assertions
+  expect(game.player1Gameboard.areAllShipsSunk()).toBe(false);
+  expect(game.player2Gameboard.areAllShipsSunk()).toBe(true);
+  expect(game.gameOver).toBe(true);
+  expect(game.winner.name).toBe("Player 1");
+});
+
+test("Computer wins by hitting all Player's ships with different orientations and longer lengths", () => {
+  const game = new Game();
+  const playerShip1 = new Ship(3);
+  const playerShip2 = new Ship(4);
+  const playerShip3 = new Ship(5);
+  const computerShip1 = new Ship(3);
+  const computerShip2 = new Ship(4);
+  const computerShip3 = new Ship(5);
+
+  game.player1Gameboard.placeShip(playerShip1, 0, 0, true);
+  game.player1Gameboard.placeShip(playerShip2, 2, 2, false);
+  game.player1Gameboard.placeShip(playerShip3, 5, 0, true);
+  game.player2Gameboard.placeShip(computerShip1, 0, 0, true);
+  game.player2Gameboard.placeShip(computerShip2, 2, 2, false);
+  game.player2Gameboard.placeShip(computerShip3, 5, 0, true);
+
+  // Player's first attack and Computer's response
+  game.handleAttack(5, 0); // Player attacks
+  overrideComputerAttack(game, 0, 0); // Set up computer's mock attack for (0, 0)
+  game.handleAttack(); // Computer's turn
+
+  // Player's second attack and Computer's response
+  game.handleAttack(6, 0); // Player attacks
+  overrideComputerAttack(game, 1, 0); // Set up computer's mock attack for (3, 2)
+  game.handleAttack(); // Computer's turn
+
+  game.handleAttack(7, 0); // Player attacks
+  overrideComputerAttack(game, 2, 0); // Set up computer's mock attack for (4, 5)
+  game.handleAttack(); // Computer's turn
+
+  game.handleAttack(8, 0); // Player attacks
+  overrideComputerAttack(game, 2, 2); // Set up computer's mock attack for (5, 5)
+  game.handleAttack(); // Computer's turn
+
+  game.handleAttack(9, 0); // Player attacks
+  overrideComputerAttack(game, 2, 3); // Set up computer's mock attack for (0, 0)
+  game.handleAttack(); // Computer's turn
+
+  game.handleAttack(2, 3); // Player attacks
+  overrideComputerAttack(game, 2, 4); // Set up computer's mock attack for (3, 2)
+  game.handleAttack(); // Computer's turn
+
+  // Continue the pattern with the specified coordinates...
+  game.handleAttack(2, 2); // Player attacks
+  overrideComputerAttack(game, 2, 5); // Set up computer's mock attack for (4, 5)
+  game.handleAttack(); // Computer's turn
+
+  game.handleAttack(2, 4); // Player attacks
+  overrideComputerAttack(game, 6, 0); // Set up computer's mock attack for (5, 5)
+  game.handleAttack(); // Computer's turn
+
+  game.handleAttack(2, 5); // Player attacks
+  overrideComputerAttack(game, 5, 0); // Set up computer's mock attack for (0, 0)
+  game.handleAttack(); // Computer's turn
+
+  game.handleAttack(0, 0); // Player attacks
+  overrideComputerAttack(game, 7, 0); // Set up computer's mock attack for (3, 2)
+  game.handleAttack(); // Computer's turn
+
+  game.handleAttack(7, 7); // Player attacks
+  overrideComputerAttack(game, 8, 0); // Set up computer's mock attack for (4, 5)
+  game.handleAttack(); // Computer's turn
+
+  game.handleAttack(1, 1); // Player attacks
+  overrideComputerAttack(game, 9, 0); // Set up computer's mock attack for (4, 5)
+  game.handleAttack(); // Computer's turn
+
+  // Log statements for debugging
+  console.log(
+    "Player 2 (Computer) Gameboard Grid:",
+    game.player2Gameboard.grid
+  );
+  console.log("Player 1 Gameboard Grid:", game.player1Gameboard.grid);
+
+  // Assertions
+  expect(game.player1Gameboard.areAllShipsSunk()).toBe(true);
+  expect(game.player2Gameboard.areAllShipsSunk()).toBe(false);
+  expect(game.gameOver).toBe(true);
+  expect(game.winner.name).toBe("Computer");
+});
+
+test("random Computer ship placement horizontally and verically", () => {
+  const game = new Game();
+  const computerShip1 = new Ship(3);
+  const computerShip2 = new Ship(4);
+  const computerShip3 = new Ship(5);
+
+  // Place computer ships randomly using your getRandomCoordinates function
+  game.player2Gameboard.placeShip(
+    computerShip1,getRandomCoordinates(),
+    true
+  );
+  game.player2Gameboard.placeShip(
+    computerShip2,getRandomCoordinates(),
+    false
+  );
+  game.player2Gameboard.placeShip(
+    computerShip3,getRandomCoordinates(),
+    true
+  );
+
+  console.log(
+    "Player 2 (Computer) Gameboard Grid:",
+    game.player2Gameboard.grid
+  );
+
+   // Ensure the ships are placed successfully
+  expect(
+    game.player2Gameboard.grid.flat().filter((cell) => cell !== null).length
+  ).toBe(computerShip1.length + computerShip2.length + computerShip3.length);
+
+  function getRandomCoordinates() {
+    const availableCoordinates = [];
+    for (let row = 0; row < this.gameboard.gridSize; row++) {
+      for (let column = 0; column < this.gameboard.gridSize; column++) {
+        const coordinate = `${row},${column}`;
+        if (!this.usedCoordinates.has(coordinate)) {
+          availableCoordinates.push({ row, column });
+        }
+      }
+    }
+    if (availableCoordinates.length === 0) {
+      return null; //All coordinates have been used
+    }
+    const randomIndex = Math.floor(Math.random() * availableCoordinates.length);
+    return availableCoordinates[randomIndex];
+  }
+});
 
 /* 
-  TEST MULTIPlE ROUNDS WITH DIFFERENT WINNERS AND DIFFERENT SHIP LENGTHS AND GAME OVER AND GAME NOT OVER
-  ---version 3 test random placement horizontal and vertical
+  ---version 3 multiple tests for random placement horizontal and vertical
 
   ---version 3.5 get game.js running from browser, console.log(game) should show object with board, turn, etc
 
