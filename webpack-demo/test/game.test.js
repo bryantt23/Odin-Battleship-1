@@ -545,8 +545,6 @@ test("random Computer ship placement horizontally and verically", () => {
 //   });
 
 /* 
-  ---version 3 multiple tests for random placement horizontal and vertical
-
   ---version 3.5 get game.js running from browser, console.log(game) should show object with board, turn, etc
 
   ---version 4 show grid on UI

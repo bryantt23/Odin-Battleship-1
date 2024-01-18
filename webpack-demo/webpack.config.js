@@ -1,12 +1,22 @@
 const path = require("path");
 
 module.exports = {
-  entry: {
-    main: "./src/index.js", 
-    test: "./test/test.js", 
-  },
+  entry: './src/game.js',
   output: {
-    filename: "[name].bundle.js", 
-    path: path.resolve(__dirname, "dist"),
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+          },
+        },
+      },
+    ],
   },
 };
