@@ -14,9 +14,7 @@ export class Game {
     this.winner = null;
 
     //this.initializeGame();
-    this.setupEventListeners();
   }
-  setupEventListeners() {}
   checkGameOver() {
     // Check for game over condition
     if (
