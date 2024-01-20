@@ -543,15 +543,3 @@ test("random Computer ship placement horizontally and verically", () => {
 //     );
 //     console.log("Player 1 Gameboard Grid:", game.player1Gameboard.grid);
 //   });
-
-/* 
-  ---version 3.5 get game.js running from browser, console.log(game) should show object with board, turn, etc
-
-  ---version 4 show grid on UI
-
-  ---version 4.5 show grids to cheat, player and computer gameboard with ships (or console.log)
-
-  ---version 4.7 hard coded player ships player can click to attack
-
-  ---version 5 player drag drop on board
-  */

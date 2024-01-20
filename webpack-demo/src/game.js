@@ -1,6 +1,7 @@
 import { Gameboard } from "./gameboard";
 import { Player } from "./player";
 import { ComputerPlayer } from "./computer";
+import { Ship } from "./ship";
 
 export class Game {
   constructor() {
@@ -13,7 +14,18 @@ export class Game {
     this.gameOver = false;
     this.winner = null;
 
-    //this.initializeGame();
+    this.initializeGame();
+  }
+  initializeGame() {
+    const ship1 = new Ship(1);
+    const ship2 = new Ship(2);
+    const ship3 = new Ship(3);
+    const ship4 = new Ship(4);
+
+    this.player1Gameboard.placeShip(ship1, 0, 0, true);
+    this.player1Gameboard.placeShip(ship3, 5, 0, false);
+    this.player2Gameboard.placeShip(ship2, 6, 6, true);
+    this.player2Gameboard.placeShip(ship4, 2, 0, false);
   }
   checkGameOver() {
     // Check for game over condition
@@ -54,9 +66,6 @@ export class Game {
   switchPlayer() {
     this.currentPlayer =
       this.currentPlayer === this.player1 ? this.player2 : this.player1;
-  }
-  initializeGame() {
-    //TODO initialize computer ships and DOM stuff
   }
   playRound(row, column) {
     // Check if it's the computer player's turn
