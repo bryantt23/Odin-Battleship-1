@@ -1,5 +1,5 @@
 export class HelloWorld {
     hi() {
-        alert("hello")
+        console.log("hello world")
     }
 };
