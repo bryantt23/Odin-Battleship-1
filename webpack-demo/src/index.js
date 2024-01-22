@@ -2,6 +2,7 @@
 import { HelloWorld } from './helloWorld';
 import { Game } from './game';
 import {check} from './DOM';
+import './styles.css';
 
 start();
 function start() {

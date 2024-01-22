@@ -18,14 +18,14 @@ export class Game {
   }
   initializeGame() {
     const ship1 = new Ship(1);
-    const ship2 = new Ship(2);
+    const ship2 = new Ship(1);
     const ship3 = new Ship(3);
-    const ship4 = new Ship(4);
+    //const ship4 = new Ship(4);
 
     this.player1Gameboard.placeShip(ship1, 0, 0, true);
     this.player1Gameboard.placeShip(ship3, 5, 0, false);
-    this.player2Gameboard.placeShip(ship2, 6, 6, true);
-    this.player2Gameboard.placeShip(ship4, 2, 0, false);
+    this.player2Gameboard.placeShip(ship2, 0, 0, true);
+    //this.player2Gameboard.placeShip(ship4, 2, 0, false);
   }
   checkGameOver() {
     // Check for game over condition
