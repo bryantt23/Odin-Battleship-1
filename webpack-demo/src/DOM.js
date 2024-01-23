@@ -10,30 +10,19 @@ export function check(grid) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const battleshipGridUser = document.querySelector("grid-user");
-//   battleshipGridUser.innerHTML = "";
-//   battleshipGridUser.style.gridTemplateColumns = `repeat(${block}, 1fr)`;
-//   battleshipGridUser.style.gridTemplateRows = `repeat(${block1}, 1fr)`;
+  const rows = 10;
+  const columns = 10;
 
-  const battleshipGridComputer = document.querySelector("grid-computer");
-//   battleshipGridComputer.innerHTML = "";
-//   battleshipGridComputer.style.gridTemplateColumns = `repeat(${block}, 1fr)`;
-//   battleshipGridComputer.style.gridTemplateRows = `repeat(${block1}, 1fr)`;
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < columns; j++) {
+      // Create a grid item element
+      const userSquare = document.createElement("div");
+      userSquare.className = "square";
+      const computerSquare = document.createElement("div");
+      computerSquare.className = "square";
 
-  function createGrid() {
-    let blocks = 100;
-
-    for (let i = 0; i < blocks; i++) {
-      const square = document.createElement("div");
-      square.classList.add("square");
-      square.style.width = "100%";
-      square.style.height = "100%";
-      square.style.borderColor = "white";
-      square.style.border = "solid";
-
-      battleshipGridUser.appendChild(square);
-      battleshipGridComputer.appendChild(square);
+      userGrid.appendChild(userSquare);
+      computerGrid.appendChild(computerSquare);
     }
   }
-  createGrid();
 });

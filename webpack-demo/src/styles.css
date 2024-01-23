@@ -26,16 +26,18 @@ body {
   color: black;
 }
 
-.battleship-grid {
+.battleship-user, .battleship-computer {
+  width: 400px;
+  height: 400px;
   margin: 2vmin;
   display: grid;
   background-color: rgb(0, 0, 255);
-  grid-template-rows: repeat(10, 5.4vmin);
-  grid-template-columns: repeat(10, 5.4vmin);
+  grid-template-rows: repeat(10, 5.44vmin);
+  grid-template-columns: repeat(10, 5.44vmin);
 }
 
-.battleship-grid div {
- border: 1px solid rgb(233, 12, 12);
+.square {
+ border: 1px solid rgba(235, 217, 144, 0.683);
 } 
 
 .ship-container,
