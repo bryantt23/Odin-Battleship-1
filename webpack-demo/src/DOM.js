@@ -1,3 +1,5 @@
+import { Game } from "./game";
+
 const userGrid = document.querySelector(".battleship-user");
 const computerGrid = document.querySelector(".battleship-computer");
 
