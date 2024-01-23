@@ -12,7 +12,6 @@ const battleship = document.querySelector('.battleship-container')
 const carrier = document.querySelector('.carrier-container')
 const width = 10;
 let isHorizontal = true;
-const gridSize = 10;
 
 start();
 function start() {
@@ -65,41 +64,7 @@ function start() {
     },
   ]
 
-// rotateBtn.addEventListener("click", () => {
-//   function turnShip(ship) {
-//     // Check if the ship can be rotated without going out of bounds
-//     const canRotate =
-//       ship.orientation === "horizontal"
-//         ? ship.length + ship.row <= this.gridSize
-//         : ship.length + ship.column <= this.gridSize;
-
-//     if (canRotate) {
-//       // Remove the ship from its current position
-//       for (let i = 0; i < ship.length; i++) {
-//         if (ship.orientation === "horizontal") {
-//           this.grid[ship.row][ship.column + i] = null;
-//         } else {
-//           this.grid[ship.row + i][ship.column] = null;
-//         }
-//       } // Toggle the ship's orientation and re-place it
-
-//       ship.toggleOrientation();
-
-//       return this.placeShip(
-//         ship,
-//         ship.row,
-//         ship.column,
-//         ship.orientation === "vertical"
-//       );
-//     }
-
-//     return false; // Ship cannot be rotated
-//   }
-//   turnShip(shipArray);
-// });
-
  //Rotate the ships
- 
  function rotate() {
     if (isHorizontal) {
       destroyer.classList.toggle('destroyer-container-vertical')
@@ -108,7 +73,6 @@ function start() {
       battleship.classList.toggle('battleship-container-vertical')
       carrier.classList.toggle('carrier-container-vertical')
       isHorizontal = false
-      // console.log(isHorizontal)
       return
     }
     if (!isHorizontal) {
@@ -118,7 +82,6 @@ function start() {
       battleship.classList.toggle('battleship-container-vertical')
       carrier.classList.toggle('carrier-container-vertical')
       isHorizontal = true
-      // console.log(isHorizontal)
       return
     }
   }
