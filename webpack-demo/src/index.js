@@ -84,7 +84,7 @@ function start() {
       isHorizontal = true
       return
     }
-  }
+  };
   rotateBtn.addEventListener('click', rotate)
 
 startBtn.addEventListener("click", () => {

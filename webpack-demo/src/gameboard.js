@@ -99,19 +99,23 @@ export class Gameboard {
     // Mark the target as attacked
     if (target === null) {
       this.grid[row][column] = miss; //'O'
+      document.querySelector(`.square[data-row="${row}"][data-column="${column}"]`).classList.add("miss");
     } else {
       this.grid[row][column] = hit; //'X'
+      document.querySelector(`.square[data-row="${row}"][data-column="${column}"]`).classList.add("hit");
       // Check if the ship is sunk
       if (this.isShipSunk(row, column)) {
         // Handle the case when a ship is sunk (e.g., update some state or message)
-        console.log(`The ship at (${row}, ${column}) has been sunk!`);
+        const turnDisplay = document.getElementById('whose-go');
+      turnDisplay.innerHTML = `The ship at (${row}, ${column}) has been sunk!`;
       }
     }
 
     // Check if all ships are sunk
     if (this.areAllShipsSunk()) {
       // Handle the end of the game (e.g., display a message or trigger game over)
-      console.log("All ships have been sunk! Game over.");
+      const turnDisplay = document.getElementById('whose-go');
+      turnDisplay.innerHTML = 'All ships have been sunk! Game over.';
     }
 
     return true; // Valid attack

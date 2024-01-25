@@ -70,8 +70,12 @@ export class Game {
   playRound(row, column) {
     // Check if it's the computer player's turn
     if (this.currentPlayer === this.player2) {
+      const turnDisplay = document.getElementById('whose-go');
+      turnDisplay.innerHTML = 'Computers Go';
       this.handleAttack(); // Computer player makes a random attack
     } else {
+      const turnDisplay = document.getElementById('whose-go');
+      turnDisplay.innerHTML = 'Your Go';
       this.handleAttack(row, column); // Directly call the player's attack
     }
   }

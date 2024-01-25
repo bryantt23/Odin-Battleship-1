@@ -54,7 +54,6 @@ body {
 .grid-display {
   display: flex;
   margin-top: 10px;
-  
 }
 
 .destroyer-container {
@@ -161,10 +160,10 @@ body {
   background-color: rgb(255, 221, 0);
 }
 
-.boom {
+.square.hit {
   background-color: red;
 }
 
-.miss {
+.square.miss {
   background-color: black;
 }
