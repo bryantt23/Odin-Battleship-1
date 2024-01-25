@@ -22,6 +22,27 @@ export class ComputerPlayer extends Player {
     const randomIndex = Math.floor(Math.random() * availableCoordinates.length);
     return availableCoordinates[randomIndex];
   }
+  // Method to randomly place the computer's ships on the board
+ randomizeShips() {
+  const shipLengths = [2, 3, 3, 4, 5]; 
+  for (const length of shipLengths) {
+    let coordinates;
+    let isVertical;
+    let isValidPlacement = false;
+
+    // Keep trying until a valid ship placement is found
+    while (!isValidPlacement) {
+      coordinates = this.getRandomCoordinates();
+      isVertical = Math.random() < 0.5; // Randomly choose vertical or horizontal placement
+      isValidPlacement = this.gameboard.placeShip(
+        length,
+        coordinates.row,
+        coordinates.column,
+        isVertical
+      );
+    }
+  }
+}
   computerAttack() {
     const coordinates = this.getRandomCoordinates();
     if (coordinates) {

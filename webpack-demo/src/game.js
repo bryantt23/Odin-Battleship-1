@@ -9,7 +9,7 @@ export class Game {
     this.player2Gameboard = new Gameboard();
     this.player1 = new Player("Player 1", this.player2Gameboard);
     this.player2 = new ComputerPlayer(this.player1Gameboard);
-
+    this.player2.randomizeShips();
     this.currentPlayer = this.player1;
     this.gameOver = false;
     this.winner = null;
@@ -17,17 +17,17 @@ export class Game {
     this.initializeGame();
   }
   initializeGame() {
-    const ship1 = new Ship(1);
-    const ship2 = new Ship(1);
-    const ship3 = new Ship(3);
+    // const ship1 = new Ship(1);
+    // const ship2 = new Ship(1);
+    // const ship3 = new Ship(3);
     //const ship4 = new Ship(4);
 
-    this.player1Gameboard.placeShip(ship1, 0, 0, true);
-    this.player1Gameboard.placeShip(ship3, 5, 0, false);
-    this.player2Gameboard.placeShip(ship2, 0, 0, true);
+    // this.player1Gameboard.placeShip(ship1, 0, 0, true);
+    // this.player1Gameboard.placeShip(ship3, 5, 0, false);
+    // this.player2Gameboard.placeShip(ship2, 0, 0, true);
     //this.player2Gameboard.placeShip(ship4, 2, 0, false);
   }
-  checkGameOver() {
+ checkGameOver() {
     // Check for game over condition
     if (
       this.player1Gameboard.areAllShipsSunk() ||
@@ -35,8 +35,8 @@ export class Game {
     ) {
       this.gameOver = true;
       this.winner = this.currentPlayer;
-      console.log("Game over!");
-      console.log(this.winner.name + " is the winner!");
+      const turnDisplay = document.getElementById("whose-go");
+      turnDisplay.innerHTML = "Game over!" + this.winner.name + " is the winner!";
       return true;
     }
     return false;

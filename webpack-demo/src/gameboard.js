@@ -79,7 +79,8 @@ export class Gameboard {
     return false; // Ship cannot be rotated
   };
   receiveAttack = (row, column) => {
-    const hit = 'X', miss = 'O'
+    const hit = "X",
+      miss = "O";
     // Check for valid coordinates
     if (
       row < 0 ||
@@ -99,23 +100,25 @@ export class Gameboard {
     // Mark the target as attacked
     if (target === null) {
       this.grid[row][column] = miss; //'O'
-      document.querySelector(`.square[data-row="${row}"][data-column="${column}"]`).classList.add("miss");
+      const square = document.querySelector(`.square`);
+      if (square) {
+        square.classList.add("miss");
+      }
     } else {
       this.grid[row][column] = hit; //'X'
-      document.querySelector(`.square[data-row="${row}"][data-column="${column}"]`).classList.add("hit");
+      const square = document.querySelector(`.square`);
+      if (square) {
+        square.classList.add("hit");
+      }
       // Check if the ship is sunk
       if (this.isShipSunk(row, column)) {
         // Handle the case when a ship is sunk (e.g., update some state or message)
-        const turnDisplay = document.getElementById('whose-go');
-      turnDisplay.innerHTML = `The ship at (${row}, ${column}) has been sunk!`;
       }
     }
 
     // Check if all ships are sunk
     if (this.areAllShipsSunk()) {
-      // Handle the end of the game (e.g., display a message or trigger game over)
-      const turnDisplay = document.getElementById('whose-go');
-      turnDisplay.innerHTML = 'All ships have been sunk! Game over.';
+      // Handle the end of the game (e.g., display a message or trigger game over) 
     }
 
     return true; // Valid attack
@@ -125,10 +128,10 @@ export class Gameboard {
     const target = this.grid[row][column];
 
     //Check if the target is a ship and if it's already sunk
-    if (target !== null && target !== "X") { 
+    if (target !== null && target !== "X") {
       // Check if all cells occupied by the ship have been hit
       for (let r = 0; r < this.gridSize; r++) {
-        for (let c = 0; c < this.gridSize; c++) { 
+        for (let c = 0; c < this.gridSize; c++) {
           if (this.grid[r][c] === target) {
             return false; // Ship is not sunk yet
           }
@@ -140,12 +143,12 @@ export class Gameboard {
     return false; // Not a ship or already sunk
   };
 
- areAllShipsSunk = () => {
+  areAllShipsSunk = () => {
     // Check if all ships on the gameboard are sunk
     for (let r = 0; r < this.gridSize; r++) {
       for (let c = 0; c < this.gridSize; c++) {
         const cur = this.grid[r][c];
-         if (cur !== null && cur !== "X" && cur !== "O") {
+        if (cur !== null && cur !== "X" && cur !== "O") {
           return false; // At least one ship is not sunk yet
         }
       }
@@ -153,5 +156,3 @@ export class Gameboard {
     return true; // All ships are sunk
   };
 }
-
-
