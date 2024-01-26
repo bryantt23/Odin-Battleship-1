@@ -29,6 +29,7 @@ export class Gameboard {
 
       for (let i = row; i < row + ship.length; i++) {
         this.grid[i][column] = ship;
+        console.log(this)
       }
     } else {
       if (column + ship.length > this.gridSize) {
@@ -42,6 +43,7 @@ export class Gameboard {
       }
 
       for (let i = column; i < column + ship.length; i++) {
+        console.log(this)
         this.grid[row][i] = ship;
       }
     }

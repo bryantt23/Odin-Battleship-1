@@ -1,4 +1,5 @@
 import { Player } from "./player";
+import { Ship } from "./ship";
 
 export class ComputerPlayer extends Player {
   constructor(gameboard) {
@@ -26,6 +27,7 @@ export class ComputerPlayer extends Player {
   randomizeShips() {
     const shipLengths = [2, 3, 3, 4, 5];
     for (const length of shipLengths) {
+      let ship = new Ship(length)
       let coordinates;
       let isVertical;
       let isValidPlacement = false;
@@ -34,10 +36,9 @@ export class ComputerPlayer extends Player {
       while (!isValidPlacement) {
         coordinates = this.getRandomCoordinates();
         isVertical = Math.random() < 0.5; // Randomly choose vertical or horizontal placement
-
         // Attempt to place the ship
         isValidPlacement = this.gameboard.placeShip(
-          length,
+          ship,
           coordinates.row,
           coordinates.column,
           isVertical
@@ -48,6 +49,7 @@ export class ComputerPlayer extends Player {
           console.log(
             `Placed ship of length ${length} at (${coordinates.row}, ${coordinates.column}), Vertical: ${isVertical}`
           );
+          console.log(this)
         } else {
           console.log(
             `Failed to place ship of length ${length} at (${coordinates.row}, ${coordinates.column}), Vertical: ${isVertical}`

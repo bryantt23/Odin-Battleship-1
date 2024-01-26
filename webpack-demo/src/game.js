@@ -9,6 +9,7 @@ export class Game {
     this.player2Gameboard = new Gameboard();
     this.player1 = new Player("Player 1", this.player2Gameboard);
     this.player2 = new ComputerPlayer(this.player1Gameboard);
+    //this.player1.randomizePlayerShips();
     this.player2.randomizeShips();
     this.currentPlayer = this.player1;
     this.gameOver = false;
@@ -20,7 +21,7 @@ export class Game {
     const startBtn = document.getElementById("start");
     startBtn.addEventListener("click", () => {
       this.player2.randomizeShips();
-      this.randomizePlayerShips();
+      //this.player1.randomizePlayerShips();
       const game = new Game();
       game.initializeGame();
     });
@@ -33,45 +34,6 @@ export class Game {
     // this.player1Gameboard.placeShip(ship3, 5, 0, false);
     // this.player2Gameboard.placeShip(ship2, 0, 0, true);
     //this.player2Gameboard.placeShip(ship4, 2, 0, false);
-  }
-  randomizePlayerShips() {
-    const shipLengths = [2, 3, 3, 4, 5];
-
-    for (const length of shipLengths) {
-      let coordinates;
-      let isVertical;
-      let isValidPlacement = false; // Keep trying until a valid ship placement is found
-
-      while (!isValidPlacement) {
-        coordinates = this.getRandomCoordinates();
-        isVertical = Math.random() < 0.5; // Randomly choose vertical or horizontal placement // Try to place the ship and log placement details
-
-        isValidPlacement = this.player1Gameboard.placeShip(
-          new Ship(length),
-          coordinates.row,
-          coordinates.column,
-          isVertical
-        );
-
-        if (isValidPlacement) {
-          console.log(
-            `Player 1 placed a ship of length ${length} at (${
-              coordinates.row
-            }, ${coordinates.column}), orientation: ${
-              isVertical ? "vertical" : "horizontal"
-            }`
-          );
-        } else {
-          console.log(
-            `Player 1 failed to place a ship of length ${length} at (${
-              coordinates.row
-            }, ${coordinates.column}), orientation: ${
-              isVertical ? "vertical" : "horizontal"
-            }`
-          );
-        }
-      }
-    }
   }
   checkGameOver() {
     // Check for game over condition
