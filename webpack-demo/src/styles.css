@@ -15,18 +15,20 @@ body {
   width: 100%;
 }
 
-#start, #rotate {
+#start,
+#rotate {
   font-size: 20px;
   font-weight: 400;
   background-color: hsla(130, 92%, 42%, 0.907);
   padding: 8px;
   cursor: pointer;
-  border:1px solid black;
+  border: 1px solid black;
   border-radius: 5px;
   color: black;
 }
 
-.battleship-user, .battleship-computer {
+.battleship-user,
+.battleship-computer {
   width: 400px;
   height: 400px;
   margin: 2vmin;
@@ -36,9 +38,13 @@ body {
   grid-template-columns: repeat(10, 5.44vmin);
 }
 
+.battleship-computer {
+  cursor: pointer;
+}
+
 .square {
- border: 1px solid rgba(235, 217, 144, 0.683);
-} 
+  border: 1px solid rgba(235, 217, 144, 0.683);
+}
 
 .ship-container,
 .hidden-info,

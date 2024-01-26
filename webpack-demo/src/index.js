@@ -8,7 +8,6 @@ import "./styles.css";
 const userGrid = document.querySelector(".battleship-user");
 const computerGrid = document.querySelector(".battleship-computer");
 const rotateBtn = document.getElementById("rotate");
-const startBtn = document.getElementById("start");
 const destroyer = document.querySelector(".destroyer-container");
 const submarine = document.querySelector(".submarine-container");
 const cruiser = document.querySelector(".cruiser-container");
@@ -17,22 +16,18 @@ const carrier = document.querySelector(".carrier-container");
 //const userSquare = [];
 let isHorizontal = true;
 
-startBtn.addEventListener("click", () => {
+
+start();
+function start() {
+  const object = new HelloWorld();
+  object.hi();
+
   const game = new Game();
   game.initializeGame();
-});
+  console.log(game);
 
-// start();
-// function start() {
-//   const object = new HelloWorld();
-//   object.hi();
-
-//   const game = new Game();
-//   game.initializeGame();
-//   console.log(game);
-
-//   check(game.player1Gameboard);
-// }
+  check(game.player1Gameboard);
+}
 
 // function handleAttack(row, column) {
 //   if (!this.gameOver) {

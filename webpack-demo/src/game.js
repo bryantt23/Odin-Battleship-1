@@ -17,6 +17,13 @@ export class Game {
     this.initializeGame();
   }
   initializeGame() {
+    const startBtn = document.getElementById("start");
+    startBtn.addEventListener("click", () => {
+      this.player2.randomizeShips();
+      this.randomizePlayerShips();
+      const game = new Game();
+      game.initializeGame();
+    });
     // const ship1 = new Ship(1);
     // const ship2 = new Ship(1);
     // const ship3 = new Ship(3);
@@ -27,7 +34,46 @@ export class Game {
     // this.player2Gameboard.placeShip(ship2, 0, 0, true);
     //this.player2Gameboard.placeShip(ship4, 2, 0, false);
   }
- checkGameOver() {
+  randomizePlayerShips() {
+    const shipLengths = [2, 3, 3, 4, 5];
+
+    for (const length of shipLengths) {
+      let coordinates;
+      let isVertical;
+      let isValidPlacement = false; // Keep trying until a valid ship placement is found
+
+      while (!isValidPlacement) {
+        coordinates = this.getRandomCoordinates();
+        isVertical = Math.random() < 0.5; // Randomly choose vertical or horizontal placement // Try to place the ship and log placement details
+
+        isValidPlacement = this.player1Gameboard.placeShip(
+          new Ship(length),
+          coordinates.row,
+          coordinates.column,
+          isVertical
+        );
+
+        if (isValidPlacement) {
+          console.log(
+            `Player 1 placed a ship of length ${length} at (${
+              coordinates.row
+            }, ${coordinates.column}), orientation: ${
+              isVertical ? "vertical" : "horizontal"
+            }`
+          );
+        } else {
+          console.log(
+            `Player 1 failed to place a ship of length ${length} at (${
+              coordinates.row
+            }, ${coordinates.column}), orientation: ${
+              isVertical ? "vertical" : "horizontal"
+            }`
+          );
+        }
+      }
+    }
+  }
+  checkGameOver() {
     // Check for game over condition
     if (
       this.player1Gameboard.areAllShipsSunk() ||
@@ -36,7 +82,8 @@ export class Game {
       this.gameOver = true;
       this.winner = this.currentPlayer;
       const turnDisplay = document.getElementById("whose-go");
-      turnDisplay.innerHTML = "Game over!" + this.winner.name + " is the winner!";
+      turnDisplay.innerHTML =
+        "Game over!" + this.winner.name + " is the winner!";
       return true;
     }
     return false;
@@ -70,12 +117,12 @@ export class Game {
   playRound(row, column) {
     // Check if it's the computer player's turn
     if (this.currentPlayer === this.player2) {
-      const turnDisplay = document.getElementById('whose-go');
-      turnDisplay.innerHTML = 'Computers Go';
+      const turnDisplay = document.getElementById("whose-go");
+      turnDisplay.innerHTML = "Computers Go";
       this.handleAttack(); // Computer player makes a random attack
     } else {
-      const turnDisplay = document.getElementById('whose-go');
-      turnDisplay.innerHTML = 'Your Go';
+      const turnDisplay = document.getElementById("whose-go");
+      turnDisplay.innerHTML = "Your Go";
       this.handleAttack(row, column); // Directly call the player's attack
     }
   }

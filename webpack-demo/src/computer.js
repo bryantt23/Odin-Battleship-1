@@ -23,26 +23,39 @@ export class ComputerPlayer extends Player {
     return availableCoordinates[randomIndex];
   }
   // Method to randomly place the computer's ships on the board
- randomizeShips() {
-  const shipLengths = [2, 3, 3, 4, 5]; 
-  for (const length of shipLengths) {
-    let coordinates;
-    let isVertical;
-    let isValidPlacement = false;
+  randomizeShips() {
+    const shipLengths = [2, 3, 3, 4, 5];
+    for (const length of shipLengths) {
+      let coordinates;
+      let isVertical;
+      let isValidPlacement = false;
 
-    // Keep trying until a valid ship placement is found
-    while (!isValidPlacement) {
-      coordinates = this.getRandomCoordinates();
-      isVertical = Math.random() < 0.5; // Randomly choose vertical or horizontal placement
-      isValidPlacement = this.gameboard.placeShip(
-        length,
-        coordinates.row,
-        coordinates.column,
-        isVertical
-      );
+      // Keep trying until a valid ship placement is found
+      while (!isValidPlacement) {
+        coordinates = this.getRandomCoordinates();
+        isVertical = Math.random() < 0.5; // Randomly choose vertical or horizontal placement
+
+        // Attempt to place the ship
+        isValidPlacement = this.gameboard.placeShip(
+          length,
+          coordinates.row,
+          coordinates.column,
+          isVertical
+        );
+
+        // Debugging: Print ship placement details
+        if (isValidPlacement) {
+          console.log(
+            `Placed ship of length ${length} at (${coordinates.row}, ${coordinates.column}), Vertical: ${isVertical}`
+          );
+        } else {
+          console.log(
+            `Failed to place ship of length ${length} at (${coordinates.row}, ${coordinates.column}), Vertical: ${isVertical}`
+          );
+        }
+      }
     }
   }
-}
   computerAttack() {
     const coordinates = this.getRandomCoordinates();
     if (coordinates) {
