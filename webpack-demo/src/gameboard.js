@@ -80,8 +80,8 @@ export class Gameboard {
 
     return false; // Ship cannot be rotated
   };
-  receiveAttack = (row, column, board = "player") => {
-    console.log("ROW COL", row, column) 
+  receiveAttack = (row, column, board) => {
+    console.log("ROW COL", row, column)
     const hit = "X",
       miss = "O";
     // Check for valid coordinates
@@ -93,7 +93,20 @@ export class Gameboard {
     ) {
       return false; // Invalid attack coordinates
     }
-    const target = this.grid[row][column];
+
+    // this is a temporary fix that doesn't work too well
+    // you should probably use an attack & receive board to track stuff 
+    // see other comments
+    let target, boardName;
+    if (board) {
+      target = board[row][column]
+      boardName = "computer"
+    }
+    else {
+      target = this.grid[row][column];
+      boardName = "player"
+    }
+
 
     // Check if the target has already been attacked
     if (target === "X" || target === "O") {
@@ -104,13 +117,13 @@ export class Gameboard {
     if (target === null) {
       console.log("THIS GRID", this, row, column)
       this.grid[row][column] = miss; //'O'
-      const square = document.querySelector(`.${board}-${row}-${column}`);
+      const square = document.querySelector(`.${boardName}-${row}-${column}`);
       if (square) {
         square.classList.add("miss");
       }
     } else {
       this.grid[row][column] = hit; //'X'
-      const square = document.querySelector(`.${board}-${row}-${column}`);
+      const square = document.querySelector(`.${boardName}-${row}-${column}`);
       if (square) {
         square.classList.add("hit");
       }

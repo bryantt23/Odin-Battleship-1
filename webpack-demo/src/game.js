@@ -4,6 +4,11 @@ import { ComputerPlayer } from "./computer";
 import { Ship } from "./ship";
 
 export class Game {
+  // why do you playergameboard? each player already has a gameboard
+  //shouldn't a player have a receive attack & send attack board. 
+  //receive attack where they place their ships & the attacks they receive
+  //send attack are spots they have attacked that are hit or miss or empty
+  // you should keep your tests running and see if you can delete the game board
   constructor() {
     this.player1Gameboard = new Gameboard();
     this.player2Gameboard = new Gameboard();
@@ -19,9 +24,9 @@ export class Game {
   initializeGame() {
     //const startBtn = document.getElementById("start");
     //startBtn.addEventListener("click", () => {
-      this.player2.randomizeShips();
-      //const game = new Game();
-      //game.initializeGame();
+    this.player2.randomizeShips();
+    //const game = new Game();
+    //game.initializeGame();
     //});
   }
   checkGameOver() {

@@ -59,9 +59,13 @@ export class ComputerPlayer extends Player {
     }
   }
   computerAttack() {
+    //will these coordinates work? isn't this to place ships? 
+    //maybe you should create 2 random coordinates, one to place, one to attack ships
     const coordinates = this.getRandomCoordinates();
     if (coordinates) {
       const { row, column } = coordinates;
+      //why is this aka the computer gameboard receiving the attack? 
+      //see my comment about having a receive and send attack boards like in the real board game
       if (this.gameboard.receiveAttack(row, column)) {
         console.log(`Computer attacks (${row}, ${column})`);
         this.usedCoordinates.add(`${row},${column}`);

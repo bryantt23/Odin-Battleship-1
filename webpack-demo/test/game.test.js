@@ -170,6 +170,9 @@ test("Player wins by hitting all Computer's ships with different orientations", 
   game.player2Gameboard.placeShip(computerShip1, 4, 4, true);
   game.player2Gameboard.placeShip(computerShip2, 6, 6, false);
 
+  //maybe you can try this strategy of handle attack, computer attack, etc
+
+
   // Player's first attack and Computer's response
   game.handleAttack(4, 4); // Player attacks
   overrideComputerAttack(game, 0, 0); // Set up computer's mock attack for (0, 0)
@@ -505,10 +508,10 @@ test("random Computer ship placement horizontally and verically", () => {
     game.player2Gameboard.grid.flat().filter((cell) => cell !== null).length
   ).toBe(
     computerShip1.length +
-      computerShip2.length +
-      computerShip3.length +
-      computerShip4.length +
-      computerShip5.length
+    computerShip2.length +
+    computerShip3.length +
+    computerShip4.length +
+    computerShip5.length
   );
 });
 

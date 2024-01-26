@@ -2,6 +2,7 @@ import { HelloWorld } from "./helloWorld";
 import { Game } from "./game";
 import { check } from "./DOM";
 import "./styles.css";
+import { Ship } from "./ship";
 
 //const ships = document.querySelectorAll(".ship");
 //const displayGrid = document.querySelector('.grid-display');
@@ -16,6 +17,9 @@ const carrier = document.querySelector(".carrier-container");
 //const userSquare = [];
 let isHorizontal = true;
 let game = new Game();
+const ship10 = new Ship(10)
+game.player1.gameboard.placeShip(ship10, 0, 0)
+console.log("🚀 ~ game:", game)
 
 // start();
 // function start() {
@@ -32,8 +36,18 @@ let game = new Game();
 function attack(row, column) {
   console.log(game)
   // Check if the move is legal (not already attacked)
-  if(game.player2Gameboard.receiveAttack(row, column, "computer")){
-    game.switchPlayer()
+  //passing in the gameboard is a temporary fix that doesn't work too well. 
+  //you need to draw out the plan of having both a player & player board grid. it's confusing
+  //you should rename player1 player2 to player and computer
+
+  // i think you need to make the decision of using play around or doing everything manually
+  // if you are going to use playround you need to make sure it works
+  //if you want to go manual you need to delete the playround 
+
+
+  if (game.player2Gameboard.receiveAttack(row, column, game.player2.gameboard.grid)) {
+    // game.switchPlayer()
+    debugger
     game.player2.computerAttack()
     console.log(`attacks (${row}, ${column})`);
     return true; // Valid attack
