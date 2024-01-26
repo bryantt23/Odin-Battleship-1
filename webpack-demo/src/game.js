@@ -9,7 +9,6 @@ export class Game {
     this.player2Gameboard = new Gameboard();
     this.player1 = new Player("Player 1", this.player2Gameboard);
     this.player2 = new ComputerPlayer(this.player1Gameboard);
-    //this.player1.randomizePlayerShips();
     this.player2.randomizeShips();
     this.currentPlayer = this.player1;
     this.gameOver = false;
@@ -18,22 +17,12 @@ export class Game {
     this.initializeGame();
   }
   initializeGame() {
-    const startBtn = document.getElementById("start");
-    startBtn.addEventListener("click", () => {
+    //const startBtn = document.getElementById("start");
+    //startBtn.addEventListener("click", () => {
       this.player2.randomizeShips();
-      //this.player1.randomizePlayerShips();
-      const game = new Game();
-      game.initializeGame();
-    });
-    // const ship1 = new Ship(1);
-    // const ship2 = new Ship(1);
-    // const ship3 = new Ship(3);
-    //const ship4 = new Ship(4);
-
-    // this.player1Gameboard.placeShip(ship1, 0, 0, true);
-    // this.player1Gameboard.placeShip(ship3, 5, 0, false);
-    // this.player2Gameboard.placeShip(ship2, 0, 0, true);
-    //this.player2Gameboard.placeShip(ship4, 2, 0, false);
+      //const game = new Game();
+      //game.initializeGame();
+    //});
   }
   checkGameOver() {
     // Check for game over condition
@@ -51,6 +40,7 @@ export class Game {
     return false;
   }
   handleAttack(row, column) {
+    console.log("CURRENT PLAYER", this.currentPlayer);
     if (!this.gameOver) {
       if (this.currentPlayer === this.player1) {
         const isValidAttack = this.player1.attack(row, column);

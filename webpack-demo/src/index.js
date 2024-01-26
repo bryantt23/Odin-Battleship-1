@@ -15,42 +15,33 @@ const battleship = document.querySelector(".battleship-container");
 const carrier = document.querySelector(".carrier-container");
 //const userSquare = [];
 let isHorizontal = true;
+let game = new Game();
 
+// start();
+// function start() {
+//   const object = new HelloWorld();
+//   object.hi();
 
-start();
-function start() {
-  const object = new HelloWorld();
-  object.hi();
+//   game = new Game();
+//   game.initializeGame();
+//  console.log("START Game", game);
 
-  const game = new Game();
-  game.initializeGame();
-  console.log(game);
-
-  check(game.player1Gameboard);
-}
-
-// function handleAttack(row, column) {
-//   if (!this.gameOver) {
-//     if (this.currentPlayer === this.player1) {
-//       const isValidAttack = this.player1.attack(row, column);
-//       if (isValidAttack) {
-//         if (this.checkGameOver()) {
-//           return;
-//         }
-//         // Switch to the other player
-//         this.switchPlayer();
-//       }
-//     } else if (this.currentPlayer === this.player2) {
-//       this.player2.computerAttack();
-//       if (this.checkGameOver()) {
-//         return;
-//       }
-//       // Switch to the other player
-//       this.switchPlayer();
-//     }
-//     // Check for game over condition
-//   }
+//   check(game.player1Gameboard);
 // }
+
+function attack(row, column) {
+  console.log(game)
+  // Check if the move is legal (not already attacked)
+  if(game.player2Gameboard.receiveAttack(row, column, "computer")){
+    game.switchPlayer()
+    game.player2.computerAttack()
+    console.log(`attacks (${row}, ${column})`);
+    return true; // Valid attack
+  } else {
+    console.log(`already attacked (${row}, ${column})`);
+    return false; // Invalid attack
+  }
+};
 
 document.addEventListener("DOMContentLoaded", () => {
   const rows = 10;
@@ -60,9 +51,9 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let j = 0; j < columns; j++) {
       // Create a grid item element
       const userSquare = document.createElement("div");
-      userSquare.className = "square";
+      userSquare.className = `square player-${i}-${j}`;
       const computerSquare = document.createElement("div");
-      computerSquare.className = "square";
+      computerSquare.className = `square computer-${i}-${j}`;
 
       // Assign row and column as custom attributes only to the computer squares
       computerSquare.dataset.row = i;
@@ -73,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const row = parseInt(computerSquare.dataset.row);
         const column = parseInt(computerSquare.dataset.column);
         // Call the attack function for the computer's grid
-        handleAttack(row, column);
+        attack(row, column);
       });
 
       userGrid.appendChild(userSquare);
@@ -104,5 +95,3 @@ function rotate() {
   }
 }
 rotateBtn.addEventListener("click", rotate);
-
-
